@@ -1,0 +1,16 @@
+{
+    "name": "@chatchi/prettier-config",
+    "version": "0.0.0",
+    "main": "index.cjs",
+    "license": "MIT",
+    "dependencies": {
+      "@trivago/prettier-plugin-sort-imports": "^4.0.0",
+      "prettier": "^2.8.4",
+      "prettier-plugin-sql": "^0.12.1",
+      "prettier-plugin-tailwindcss": "^0.2.3"
+    },
+    "devDependencies": {},
+    "publishConfig": {
+      "access": "public"
+    }
+  }

@@ -1,23 +1,23 @@
-import { Configuration, OpenAIApi } from "openai";
-import extract from "extract-json-from-string";
+import extract from 'extract-json-from-string';
+import { Configuration, OpenAIApi } from 'openai';
 
-import env from "../env.json";
+import env from '../env.json';
 
 interface ParsedData {
   agent_id: string;
   position: {
     x: number;
     y: number;
-  }
+  };
   surroundings: any;
   sleepiness: number;
 }
 
 interface ActionResponse {
   action: {
-    type: "move" | "wait",
-    direction?: "up" | "down" | "left" | "right"
-  }
+    type: 'move' | 'wait';
+    direction?: 'up' | 'down' | 'left' | 'right';
+  };
 }
 
 const configuration = new Configuration({
@@ -75,13 +75,12 @@ class ServerAgent {
       ${parsedData.sleepiness} out of 10
 
       The JSON response indicating the next move is.
-      `
+      `;
 
       const completion = await this.callOpenAI(prompt, 0);
       return completion;
-
     } catch (error) {
-      console.error("Error processing GPT-3 response:", error);
+      console.error('Error processing GPT-3 response:', error);
     }
   }
 
@@ -89,37 +88,37 @@ class ServerAgent {
     if (attempt > 3) {
       return null;
     }
-  
+
     if (attempt > 0) {
-      prompt = "YOU MUST ONLY RESPOND WITH VALID JSON OBJECTS\N" + prompt;
+      prompt = 'YOU MUST ONLY RESPOND WITH VALID JSON OBJECTSN' + prompt;
     }
-  
+
     const response = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: prompt }],
+      model: 'gpt-3.5-turbo',
+      messages: [{ role: 'user', content: prompt }],
     });
-  
-    const message = response.data.choices[0].message
+
+    const message = response.data.choices[0].message;
 
     if (!message) {
-      console.error('Message is undefined, response: ', response)
+      console.error('Message is undefined, response: ', response);
 
-      return null
+      return null;
     }
 
-    console.log('OpenAI response', message.content)
-  
+    console.log('OpenAI response', message.content);
+
     const responseObject = this.cleanAndProcess(message.content);
     if (responseObject) {
       return responseObject;
     }
-  
+
     return await this.callOpenAI(prompt, attempt + 1);
   }
-  
+
   cleanAndProcess(text: string) {
     const extractedJson = extract(text)[0];
-  
+
     if (!extractedJson) {
       return null;
     }
