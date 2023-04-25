@@ -11,7 +11,8 @@
       "outDir": "dist",
       "baseUrl": ".",
   },
-  "include": [
-      "./**/*"
-  ]
+  "include": ["src", "types"],
+  "ts-node": {
+    "files": true
+  }
 }

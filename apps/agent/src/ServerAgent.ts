@@ -1,7 +1,7 @@
 import { Configuration, OpenAIApi } from "openai";
 import extract from "extract-json-from-string";
 
-import env from "./env.json";
+import env from "../env.json";
 
 interface ParsedData {
   agent_id: string;

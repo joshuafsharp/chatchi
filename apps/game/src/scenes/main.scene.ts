@@ -46,11 +46,15 @@ export default class MainScene extends Phaser.Scene {
     this.fieldMapTileMap.addTilesetImage("GPTRPG", "tiles");
     for (let i = 0; i < this.fieldMapTileMap.layers.length; i++) {
         const layer = this.fieldMapTileMap.createLayer(i, "GPTRPG", 0, 0);
-        layer.scale = 3;
+        if (layer) {
+          layer.scale = 3;
+        }
     }
   
     const plantLayer = this.fieldMapTileMap.createBlankLayer("plants", "GPTRPG", 0, 0);
-    plantLayer.scale = 3;
+    if (plantLayer) {
+      plantLayer.scale = 3;
+    }
   
     this.plantLayer = this.add.container();
   
@@ -117,6 +121,11 @@ export default class MainScene extends Phaser.Scene {
       return
     }
 
+    if (!this.input.keyboard) {
+      console.error('Error: Keyboard input is undefined. input: ', this.input)
+      return
+    }
+
     const cursors = this.input.keyboard.createCursorKeys();
   
     const addPlantKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
@@ -146,33 +155,36 @@ export default class MainScene extends Phaser.Scene {
         });
   
         if (noOtherTile) {
-          const { x: worldX, y: worldY } = this.fieldMapTileMap.tileToWorldXY(tileX, tileY);
-  
-          const plant = this.add.sprite(worldX, worldY, "plant");
-  
-          plant.setFrame(446);
-          plant.setOrigin(0, 0);
-          plant.scale = 3;
-          this.plantLayer?.add(plant);
+          const worldPosition = this.fieldMapTileMap.tileToWorldXY(tileX, tileY);
+          if (worldPosition) {          
+            const plant = this.add.sprite(worldPosition.x, worldPosition.y, "plant");
+            
+            plant.setFrame(446);
+            plant.setOrigin(0, 0);
+            plant.scale = 3;
+            this.plantLayer?.add(plant);
+          }
         }
       }
     }
   
     if (removePlantKey.isDown) {
       const playerPosition = this.gridEngine.getPosition("player");
-      const { x: worldX, y: worldY } = this.fieldMapTileMap.tileToWorldXY(playerPosition.x, playerPosition.y);
+      const worldPosition = this.fieldMapTileMap.tileToWorldXY(playerPosition.x, playerPosition.y);
   
-      // Find all overlapping plants
-      const plantsToRemove = this.plantLayer.list.filter((plant) => {
-        // @ts-ignore
-        const distance = Phaser.Math.Distance.Between(plant.x, plant.y, worldX, worldY);
-        return distance < (16 * 3) / 2;
-      });
-  
-      // Remove all the overlapping plants
-      plantsToRemove.forEach((plant) => {
-        plant.destroy();
-      });
+      if (worldPosition) {
+        // Find all overlapping plants
+        const plantsToRemove = this.plantLayer.list.filter((plant) => {
+          // @ts-ignore
+          const distance = Phaser.Math.Distance.Between(plant.x, plant.y, worldPosition.x, worldPosition.y);
+          return distance < (16 * 3) / 2;
+        });
+        
+        // Remove all the overlapping plants
+        plantsToRemove.forEach((plant) => {
+          plant.destroy();
+        });
+      }
     }
     
     if (cursors.left.isDown) {

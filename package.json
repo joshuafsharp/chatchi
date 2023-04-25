@@ -1,20 +1,14 @@
 {
-  "name": "gptrpg",
+  "name": "@chatchi/platform",
   "version": "1.0.0",
-  "description": "This repo contains two things:",
+  "description": "AI agent integrated with LLM to give it autonomy in the Chatchi world",
   "main": "index.ts",
   "scripts": {
-    "start": "concurrently \"npm:start --prefix agent\" \"npm:start --prefix ui-admin\"",
-    "install": "cd agent && npm install && cd ../ui-admin && npm install"
+    "turbo": "turbo"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "concurrently": "^8.0.1"
-  },
   "devDependencies": {
-    "@types/ws": "8.5.4",
-    "ts-node": "10.9.1",
-    "typescript": "5.0.4"
+    "turbo": "1.9.3"
   }
 }
