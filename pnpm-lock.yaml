@@ -16,6 +16,7 @@ importers:
     specifiers:
       '@chatchi/eslint-config': '*'
       '@chatchi/prettier-config': '*'
+      '@chatchi/types': '*'
       '@types/node': 18.16.0
       '@types/ws': 8.5.4
       extract-json-from-string: ^1.0.1
@@ -31,6 +32,7 @@ importers:
     devDependencies:
       '@chatchi/eslint-config': link:../../packages/eslint-config
       '@chatchi/prettier-config': link:../../packages/prettier-config
+      '@chatchi/types': link:../../packages/types
       '@types/node': 18.16.0
       '@types/ws': 8.5.4
       nodemon: 2.0.22
@@ -41,6 +43,7 @@ importers:
     specifiers:
       '@chatchi/eslint-config': '*'
       '@chatchi/prettier-config': '*'
+      '@chatchi/types': '*'
       '@testing-library/jest-dom': ^5.16.4
       '@testing-library/react': ^13.1.1
       '@testing-library/user-event': ^13.5.0
@@ -63,6 +66,7 @@ importers:
     devDependencies:
       '@chatchi/eslint-config': link:../../packages/eslint-config
       '@chatchi/prettier-config': link:../../packages/prettier-config
+      '@chatchi/types': link:../../packages/types
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
       '@testing-library/user-event': 13.5.0
@@ -103,6 +107,14 @@ importers:
       prettier: 2.8.8
       prettier-plugin-sql: 0.12.1_prettier@2.8.8
       prettier-plugin-tailwindcss: 0.2.7_vx2i665krt45esupzuhn5o4zsy
+
+  packages/types:
+    specifiers:
+      grid-engine: ^2.27.1
+      phaser: 3.60.0
+    devDependencies:
+      grid-engine: 2.27.1_phaser@3.60.0
+      phaser: 3.60.0
 
 packages:
 
@@ -5282,7 +5294,6 @@ packages:
 
   /eventemitter3/5.0.0:
     resolution: {integrity: sha512-riuVbElZZNXLeLEoprfNYoDSwTBRR44X3mnhdI1YcnENpWTCsTTVZ2zFuqQcpoyqPQIUXdiPEU0ECAq0KQRaHg==}
-    dev: false
 
   /events/3.3.0:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
@@ -5803,7 +5814,6 @@ packages:
     dependencies:
       phaser: 3.60.0
       rxjs: 7.8.0
-    dev: false
 
   /gzip-size/6.0.0:
     resolution: {integrity: sha512-ax7ZYomf6jqPTQ4+XCpUGyXKHk5WweS+e05MBO4/y3WJ5RkmPXNKvX+bx1behVILVwr6JSQvZAku021CHPXG3Q==}
@@ -7798,7 +7808,6 @@ packages:
     resolution: {integrity: sha512-IKUy35EnoEVcl2EmJ8WOyK4X8OoxHYdlhZLgRGpNrvD1fEagYffhVmwHcapE/tGiLgyrnezmXIo5RrH2NcrTHw==}
     dependencies:
       eventemitter3: 5.0.0
-    dev: false
 
   /picocolors/0.2.1:
     resolution: {integrity: sha512-cMlDqaLEqfSaW8Z7N5Jw+lyIW869EzT73/F5lhtY9cLGoVxSXznfgfXMO0Z5K0o0Q2TkTXq+0KFsdnSe3jDViA==}
@@ -9269,7 +9278,6 @@ packages:
     resolution: {integrity: sha512-F2+gxDshqmIub1KdvZkaEfGDwLNpPvk9Fs6LD/MyQxNgMds/WH9OdDDXOmxUZpME+iSK3rQCctkL0DYyytUqMg==}
     dependencies:
       tslib: 2.5.0
-    dev: false
 
   /safe-array-concat/1.0.0:
     resolution: {integrity: sha512-9dVEFruWIsnie89yym+xWTAYASdpw3CJV7Li/6zBewGf9z2i1j31rP6jnY0pHEO4QZh6N0K11bFjWmdR8UGdPQ==}

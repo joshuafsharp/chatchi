@@ -1,0 +1,13 @@
+{
+  "name": "@chatchi/types",
+  "version": "0.0.0",
+  "main": "index.ts",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "grid-engine": "^2.27.1",
+    "phaser": "3.60.0"
+  }
+}

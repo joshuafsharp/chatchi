@@ -1,6 +1,8 @@
 import extract from 'extract-json-from-string';
 import { Configuration, OpenAIApi } from 'openai';
 
+import { Surroundings, ValidDirection } from '@chatchi/types';
+
 import env from '../env.json';
 
 interface ParsedData {
@@ -9,14 +11,14 @@ interface ParsedData {
     x: number;
     y: number;
   };
-  surroundings: any;
+  surroundings: Surroundings;
   sleepiness: number;
 }
 
 interface ActionResponse {
   action: {
     type: 'move' | 'wait';
-    direction?: 'up' | 'down' | 'left' | 'right';
+    direction?: ValidDirection;
   };
 }
 

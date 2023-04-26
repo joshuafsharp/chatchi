@@ -58,7 +58,6 @@ export default class MainScene extends Phaser.Scene {
 
     this.plantLayer = this.add.container();
 
-    // START: Add character to grid engine
     const playerSprite = this.add.sprite(0, 0, 'player');
     playerSprite.scale = 3;
     playerSprite.setDepth(6);
@@ -79,13 +78,9 @@ export default class MainScene extends Phaser.Scene {
       ],
     };
 
-    // END: Add character to grid engine
-
     this.gridEngine.create(this.fieldMapTileMap, gridEngineConfig);
 
-    // START: Create agent
     this.agent = new Agent(this.gridEngine, this.fieldMapTileMap, agentId, { x: 6, y: 5 });
-    // END: Create agent
 
     // Create walkable tiles bridge
     this.gridEngine.setTransition({ x: 10, y: 26 }, 'ground', 'bridge');

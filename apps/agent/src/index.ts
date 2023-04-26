@@ -9,6 +9,8 @@ const agents: {
 } = {};
 
 wss.on('connection', function connection(ws) {
+  console.log('Connected to web socket server');
+
   ws.on('error', console.error);
 
   ws.on('message', async function message(data) {

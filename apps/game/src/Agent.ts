@@ -1,5 +1,7 @@
 import { Direction, GridEngine } from 'grid-engine';
 
+import { Surroundings, ValidDirection } from '@chatchi/types';
+
 class Agent {
   private gridEngine: GridEngine;
 
@@ -58,26 +60,36 @@ class Agent {
 
       if (res.type === 'nextMove') {
         const { data } = res;
+
         switch (data.action.type) {
-          case 'move':
+          case 'move': {
             this.moveAndCheckCollision(data.action.direction, this.fieldMapTileMap);
+
             break;
-          case 'navigate':
+          }
+          case 'navigate': {
             this.gridEngine.moveTo(this.agent_id, { x: data.action.x, y: data.action.y });
+
             break;
-          case 'sleep':
+          }
+          case 'sleep': {
             const { x, y } = this.getCharacterPosition();
+
             if (x === this.bedPosition.x && y === this.bedPosition.y) {
               this.sleepiness = 0;
             } else {
               console.log(`Character ${this.agent_id} tried to sleep out of bed.`);
             }
+
             this.nextMove();
+
             break;
-          default:
+          }
+          default: {
             setTimeout(() => {
               this.nextMove();
             }, 2000);
+          }
         }
         return;
       }
@@ -85,7 +97,7 @@ class Agent {
   }
 
   initializeMovementStoppedListener() {
-    this.gridEngine.movementStopped().subscribe((stopper) => {
+    this.gridEngine.movementStopped().subscribe(() => {
       this.nextMove();
     });
   }
@@ -98,7 +110,7 @@ class Agent {
     const playerPosition = this.getCharacterPosition();
     const { x: playerX, y: playerY } = playerPosition;
 
-    const surroundings = {
+    const surroundings: Surroundings = {
       up: 'walkable',
       down: 'walkable',
       left: 'walkable',
@@ -106,14 +118,14 @@ class Agent {
     };
 
     const directions: {
-      key: keyof typeof surroundings;
+      key: ValidDirection;
       dx: -1 | 0 | 1;
       dy: -1 | 0 | 1;
     }[] = [
-      { key: 'up', dx: 0, dy: -1 },
-      { key: 'down', dx: 0, dy: 1 },
-      { key: 'left', dx: -1, dy: 0 },
-      { key: 'right', dx: 1, dy: 0 },
+      { key: Direction.UP, dx: 0, dy: -1 },
+      { key: Direction.DOWN, dx: 0, dy: 1 },
+      { key: Direction.LEFT, dx: -1, dy: 0 },
+      { key: Direction.RIGHT, dx: 1, dy: 0 },
     ];
 
     this.fieldMapTileMap.layers.forEach((layer) => {
@@ -131,22 +143,26 @@ class Agent {
     return surroundings;
   }
 
-  moveAndCheckCollision(direction: Direction, fieldMapTileMap: Phaser.Tilemaps.Tilemap) {
+  moveAndCheckCollision(direction: ValidDirection, fieldMapTileMap: Phaser.Tilemaps.Tilemap) {
     const currentPosition = this.gridEngine.getPosition(this.agent_id);
     const nextPosition = { ...currentPosition };
 
     switch (direction) {
       case 'left':
         nextPosition.x -= 1;
+
         break;
       case 'right':
         nextPosition.x += 1;
+
         break;
       case 'up':
         nextPosition.y -= 1;
+
         break;
       case 'down':
         nextPosition.y += 1;
+
         break;
       default:
         break;
@@ -161,6 +177,7 @@ class Agent {
     if (collision) {
       this.nextMove();
     } else {
+      // TODO: Address this issue of requiring enum values instead of string literals
       this.gridEngine.move(this.agent_id, direction);
     }
   }
