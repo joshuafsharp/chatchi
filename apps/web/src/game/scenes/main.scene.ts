@@ -1,10 +1,10 @@
 import { Direction, GridEngine } from 'grid-engine';
 import Phaser from 'phaser';
 
-import Agent from '../Agent';
 import mapJson from '../assets/GPTRPGMap.json';
 import characters from '../assets/characters.png';
 import tileset from '../assets/v2.png';
+import Agent from '../entities/Agent';
 
 export default class MainScene extends Phaser.Scene {
   agent?: Agent;
