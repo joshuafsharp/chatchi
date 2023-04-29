@@ -6,4 +6,5 @@ out.txt
 .turbo
 build/**
 dist/**
-.next/**
+
+**/.next

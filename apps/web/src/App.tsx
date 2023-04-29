@@ -1,7 +1,5 @@
-import React from 'react';
+import './game/PhaserGame';
 
-function App() {
-  return <div></div>;
+export default function App() {
+  return null;
 }
-
-export default App;
