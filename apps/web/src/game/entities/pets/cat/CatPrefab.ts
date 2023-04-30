@@ -29,6 +29,8 @@ export default class CatPrefab extends Phaser.GameObjects.Sprite {
   }
 
   /* START-USER-CODE */
+  public id = 'pet-cat';
+
   private start() {
     this.anims.create(animations as Phaser.Types.Animations.Animation);
 

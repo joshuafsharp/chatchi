@@ -24,6 +24,7 @@
             "id": "7eb4791c-73bd-4b40-95fd-0adc1bed8629",
             "label": "groundLayer",
             "useGameObjectName": true,
+            "scope": "CLASS",
             "components": [],
             "scaleX": 3,
             "scaleY": 3,
@@ -54,7 +55,8 @@
                         "x",
                         "y"
                     ],
-                    "label": "prefab",
+                    "label": "catPrefab",
+                    "scope": "CLASS",
                     "components": [],
                     "x": 224,
                     "y": 288,

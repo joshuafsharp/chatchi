@@ -12,9 +12,13 @@ import CatPrefab from '../entities/pets/cat/CatPrefab';
 /* END-USER-IMPORTS */
 
 export default class Main extends Phaser.Scene {
-  private gridEngine?: GridEngine;
+  constructor() {
+    super('Main');
 
-  private village!: Phaser.Tilemaps.Tilemap;
+    /* START-USER-CTR-CODE */
+    // Write your code here.
+    /* END-USER-CTR-CODE */
+  }
 
   preload(): void {
     this.load.pack('asset-pack', 'src/game/entities/pets/cat/asset-pack.json');
@@ -39,16 +43,24 @@ export default class Main extends Phaser.Scene {
     // petLayer
     const petLayer = this.add.layer();
 
-    // prefab
-    const prefab = new CatPrefab(this, 224, 288);
-    petLayer.add(prefab);
+    // catPrefab
+    const catPrefab = new CatPrefab(this, 224, 288);
+    petLayer.add(catPrefab);
 
+    this.groundLayer = groundLayer;
+    this.catPrefab = catPrefab;
     this.village = village;
 
     this.events.emit('scene-awake');
   }
 
+  private groundLayer!: Phaser.Tilemaps.TilemapLayer;
+  private catPrefab!: CatPrefab;
+  private village!: Phaser.Tilemaps.Tilemap;
+
   /* START-USER-CODE */
+
+  private gridEngine!: GridEngine;
 
   // Write your code here
 
@@ -64,15 +76,15 @@ export default class Main extends Phaser.Scene {
           startPosition: { x: 7, y: 6 },
         },
         {
-          id: 'pet-cat',
-          sprite: petCatSprite,
+          id: this.catPrefab.id,
+          sprite: this.catPrefab.texture,
           walkingAnimationMapping: 0,
           startPosition: { x: 10, y: 10 },
         },
       ],
     };
 
-    this.gridEngine?.create(this.fieldMapTileMap, gridEngineConfig);
+    this.gridEngine.create(this.fieldMapTileMap, gridEngineConfig);
   }
 
   update() {}
