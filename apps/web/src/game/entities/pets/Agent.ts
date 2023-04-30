@@ -2,7 +2,7 @@ import { Direction, GridEngine } from 'grid-engine';
 
 import { Surroundings, ValidDirection } from '@chatchi/types';
 
-class Agent {
+export class Agent {
   private gridEngine: GridEngine;
 
   private fieldMapTileMap: Phaser.Tilemaps.Tilemap;
@@ -203,5 +203,3 @@ class Agent {
     );
   }
 }
-
-export default Agent;

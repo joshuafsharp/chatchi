@@ -1,6 +1,6 @@
 import { GridEngine } from 'grid-engine';
 
-import MainScene from './scenes/main.scene';
+import MainScene from './scenes/Main';
 
 const config: Phaser.Types.Core.GameConfig = {
   title: 'GPTRPG',
@@ -27,7 +27,7 @@ const config: Phaser.Types.Core.GameConfig = {
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
   parent: 'game',
-  backgroundColor: '#48C4F8',
+  backgroundColor: '#9bd3c3',
 };
 
 export const phaser = new Phaser.Game(config);

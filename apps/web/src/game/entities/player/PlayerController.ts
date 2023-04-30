@@ -5,7 +5,10 @@ export class PlayerController {
 
   gridEngine?: GridEngine;
 
+  constructor() {}
+
   public update() {
     // TODO: Handle movement
+    // const cursors = this.input.keyboard.createCursorKeys();
   }
 }

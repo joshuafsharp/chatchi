@@ -1,0 +1,87 @@
+{
+    "id": "cd07d73f-9246-4ab8-b20f-3b60f8b801a5",
+    "sceneType": "SCENE",
+    "settings": {
+        "compilerInsertSpaces": true,
+        "compilerTabSize": 2,
+        "snapEnabled": true,
+        "exportClass": true,
+        "autoImport": true,
+        "preloadPackFiles": [
+            "web/src/game/entities/pets/cat/asset-pack.json",
+            "web/src/game/assets/world/grass-water-tiles.json",
+            "web/src/game/assets/world/village-asset-pack.json"
+        ],
+        "createMethodName": "editorCreate",
+        "sceneKey": "Main",
+        "compilerOutputLanguage": "TYPE_SCRIPT",
+        "borderWidth": 1150,
+        "borderHeight": 750
+    },
+    "displayList": [
+        {
+            "type": "TilemapLayer",
+            "id": "7eb4791c-73bd-4b40-95fd-0adc1bed8629",
+            "label": "groundLayer",
+            "useGameObjectName": true,
+            "components": [],
+            "scaleX": 3,
+            "scaleY": 3,
+            "list": [],
+            "tilemapId": "c1a16f7a-b867-4fe1-82dc-6b26d51d4ccb",
+            "layerName": "Tile Layer 1",
+            "tilesets": [
+                "grass-water"
+            ]
+        },
+        {
+            "type": "Layer",
+            "id": "5d31d69a-c09c-4215-9266-2fb2d8cee1d2",
+            "label": "playerLayer",
+            "components": [],
+            "list": []
+        },
+        {
+            "type": "Layer",
+            "id": "e9fb5f6f-b696-47d8-9933-174dd4c6597d",
+            "label": "petLayer",
+            "components": [],
+            "list": [
+                {
+                    "prefabId": "89065fa4-efcc-417a-8f95-1162f2bb3fe9",
+                    "id": "167ed9e3-d53f-4c1c-a084-79cdd1211605",
+                    "unlock": [
+                        "x",
+                        "y"
+                    ],
+                    "label": "prefab",
+                    "components": [],
+                    "x": 224,
+                    "y": 288,
+                    "nestedPrefabs": [],
+                    "list": []
+                }
+            ]
+        }
+    ],
+    "plainObjects": [
+        {
+            "id": "c1a16f7a-b867-4fe1-82dc-6b26d51d4ccb",
+            "type": "Tilemap",
+            "label": "village",
+            "key": "village",
+            "tilesets": [
+                {
+                    "name": "grass-water",
+                    "imageKey": "Grass tiles v.2"
+                }
+            ]
+        }
+    ],
+    "meta": {
+        "app": "Phaser Editor 2D - Scene Editor",
+        "url": "https://phasereditor2d.com",
+        "contentType": "phasereditor2d.core.scene.SceneContentType",
+        "version": 3
+    }
+}

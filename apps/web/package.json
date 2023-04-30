@@ -2,6 +2,7 @@
   "name": "@chatchi/web",
   "version": "0.1.0",
   "scripts": {
+    "editor": "phasereditor2d-launcher -project .",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "next preview",
@@ -26,6 +27,7 @@
     "@types/react-dom": "18.2.1",
     "@vitejs/plugin-react": "4.0.0",
     "eslint-config-react": "1.1.7",
+    "phasereditor2d-launcher": "3.60.3",
     "typescript": "5.0.4",
     "vite": "4.3.3"
   }

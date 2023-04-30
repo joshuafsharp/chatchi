@@ -1,8 +1,10 @@
 import { Direction, GridEngine } from 'grid-engine';
+import { GridEngineConfig } from 'grid-engine';
 import Phaser from 'phaser';
 
 import mapJson from '../assets/GPTRPGMap.json';
 import characters from '../assets/characters.png';
+import petCat from '../assets/pets/cat-asset-pack.json';
 import tileset from '../assets/v2.png';
 import Agent from '../entities/Agent';
 
@@ -19,6 +21,9 @@ export default class MainScene extends Phaser.Scene {
     this.load.image('tiles', tileset);
 
     this.load.tilemapTiledJSON('field-map', mapJson);
+
+    // this.load.pack('pet-cat', `assets/pets/cat-asset-pack.json`);
+    this.load.addPack(petCat);
 
     this.load.spritesheet('player', characters, {
       frameWidth: 26,
@@ -62,18 +67,28 @@ export default class MainScene extends Phaser.Scene {
     playerSprite.scale = 3;
     playerSprite.setDepth(6);
 
+    const petCatSprite = this.add.sprite(0, 0, 'pet-cat');
+    petCatSprite.scale = 3;
+    petCatSprite.setDepth(6);
+
     this.cameras.main.startFollow(playerSprite, true);
     this.cameras.main.setFollowOffset(-playerSprite.width, -playerSprite.height);
 
     const agentId = 'agent1';
 
-    const gridEngineConfig = {
+    const gridEngineConfig: GridEngineConfig = {
       characters: [
         {
           id: agentId,
           sprite: playerSprite,
           walkingAnimationMapping: 6,
           startPosition: { x: 7, y: 6 },
+        },
+        {
+          id: 'pet-cat',
+          sprite: petCatSprite,
+          walkingAnimationMapping: 0,
+          startPosition: { x: 10, y: 10 },
         },
       ],
     };
