@@ -1,0 +1,65 @@
+{
+    "id": "e899fae7-4a42-4ab9-b887-eacf173fa4f4",
+    "sceneType": "PREFAB",
+    "settings": {
+        "compilerInsertSpaces": true,
+        "compilerTabSize": 2,
+        "exportClass": true,
+        "autoImport": true,
+        "preloadMethodName": "",
+        "preloadPackFiles": [],
+        "createMethodName": "",
+        "compilerOutputLanguage": "TYPE_SCRIPT",
+        "borderWidth": 32,
+        "borderHeight": 32
+    },
+    "displayList": [
+        {
+            "type": "Sprite",
+            "id": "d4c028aa-fc16-4a1d-acd6-e87a7501ea9e",
+            "label": "spritesheet0",
+            "components": [],
+            "texture": {
+                "key": "spritesheet",
+                "frame": 0
+            },
+            "x": 16,
+            "y": 16,
+            "scaleX": 3,
+            "scaleY": 3,
+            "list": []
+        }
+    ],
+    "plainObjects": [
+        {
+            "id": "e028d288-062c-4cea-9d7e-92e069e2ec0e",
+            "type": "Keyboard.Key",
+            "label": "upKey",
+            "keyCode": "UP"
+        },
+        {
+            "id": "b166fa21-3f7e-4b9a-9a43-a5a61c3e3b08",
+            "type": "Keyboard.Key",
+            "label": "rightKey",
+            "keyCode": "RIGHT"
+        },
+        {
+            "id": "dbe0c069-960e-4a36-9ae3-a8aa93a5da64",
+            "type": "Keyboard.Key",
+            "label": "downKey",
+            "keyCode": "DOWN"
+        },
+        {
+            "id": "47afeacc-6162-4e10-9b3c-54a7eeb7d54d",
+            "type": "Keyboard.Key",
+            "label": "leftKey",
+            "keyCode": "LEFT"
+        }
+    ],
+    "meta": {
+        "app": "Phaser Editor 2D - Scene Editor",
+        "url": "https://phasereditor2d.com",
+        "contentType": "phasereditor2d.core.scene.SceneContentType",
+        "version": 3
+    }
+}

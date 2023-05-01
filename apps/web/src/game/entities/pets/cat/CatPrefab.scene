@@ -15,7 +15,7 @@
     },
     "displayList": [
         {
-            "type": "Image",
+            "type": "Sprite",
             "id": "0f4f1d1c-1e11-4442-898f-2df29c008587",
             "label": "pet_cat0",
             "components": [],

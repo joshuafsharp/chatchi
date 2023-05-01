@@ -8,9 +8,10 @@
         "exportClass": true,
         "autoImport": true,
         "preloadPackFiles": [
-            "web/src/game/entities/pets/cat/asset-pack.json",
+            "web/src/game/assets/world/village-asset-pack.json",
             "web/src/game/assets/world/grass-water-tiles.json",
-            "web/src/game/assets/world/village-asset-pack.json"
+            "web/src/game/entities/pets/cat/cat-asset-pack.json",
+            "web/src/game/entities/player/assets/tone1/player-asset-pack.json"
         ],
         "createMethodName": "editorCreate",
         "sceneKey": "Main",
@@ -40,7 +41,23 @@
             "id": "5d31d69a-c09c-4215-9266-2fb2d8cee1d2",
             "label": "playerLayer",
             "components": [],
-            "list": []
+            "list": [
+                {
+                    "prefabId": "e899fae7-4a42-4ab9-b887-eacf173fa4f4",
+                    "id": "7c5158ad-5a64-4f60-a9a5-a97d586ce65a",
+                    "unlock": [
+                        "x",
+                        "y"
+                    ],
+                    "label": "playerPrefab",
+                    "scope": "CLASS",
+                    "components": [],
+                    "x": 384,
+                    "y": 224,
+                    "nestedPrefabs": [],
+                    "list": []
+                }
+            ]
         },
         {
             "type": "Layer",
@@ -58,8 +75,8 @@
                     "label": "catPrefab",
                     "scope": "CLASS",
                     "components": [],
-                    "x": 224,
-                    "y": 288,
+                    "x": 176,
+                    "y": 208,
                     "nestedPrefabs": [],
                     "list": []
                 }

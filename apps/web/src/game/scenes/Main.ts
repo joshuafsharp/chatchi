@@ -6,6 +6,7 @@ import { GridEngine, GridEngineConfig } from 'grid-engine';
 import Phaser from 'phaser';
 
 import CatPrefab from '../entities/pets/cat/CatPrefab';
+import PlayerPrefab from '../entities/player/assets/tone1/PlayerPrefab';
 
 /* START-USER-IMPORTS */
 
@@ -21,9 +22,13 @@ export default class Main extends Phaser.Scene {
   }
 
   preload(): void {
-    this.load.pack('asset-pack', 'src/game/entities/pets/cat/asset-pack.json');
-    this.load.pack('grass-water-tiles', 'src/game/assets/world/grass-water-tiles.json');
     this.load.pack('village-asset-pack', 'src/game/assets/world/village-asset-pack.json');
+    this.load.pack('grass-water-tiles', 'src/game/assets/world/grass-water-tiles.json');
+    this.load.pack('cat-asset-pack', 'src/game/entities/pets/cat/cat-asset-pack.json');
+    this.load.pack(
+      'player-asset-pack',
+      'src/game/entities/player/assets/tone1/player-asset-pack.json',
+    );
   }
 
   editorCreate(): void {
@@ -38,16 +43,21 @@ export default class Main extends Phaser.Scene {
     groundLayer.scaleY = 3;
 
     // playerLayer
-    this.add.layer();
+    const playerLayer = this.add.layer();
+
+    // playerPrefab
+    const playerPrefab = new PlayerPrefab(this, 384, 224);
+    playerLayer.add(playerPrefab);
 
     // petLayer
     const petLayer = this.add.layer();
 
     // catPrefab
-    const catPrefab = new CatPrefab(this, 224, 288);
+    const catPrefab = new CatPrefab(this, 176, 208);
     petLayer.add(catPrefab);
 
     this.groundLayer = groundLayer;
+    this.playerPrefab = playerPrefab;
     this.catPrefab = catPrefab;
     this.village = village;
 
@@ -55,12 +65,13 @@ export default class Main extends Phaser.Scene {
   }
 
   private groundLayer!: Phaser.Tilemaps.TilemapLayer;
+  private playerPrefab!: PlayerPrefab;
   private catPrefab!: CatPrefab;
   private village!: Phaser.Tilemaps.Tilemap;
 
   /* START-USER-CODE */
 
-  private gridEngine!: GridEngine;
+  public gridEngine!: GridEngine;
 
   // Write your code here
 
@@ -70,21 +81,21 @@ export default class Main extends Phaser.Scene {
     const gridEngineConfig: GridEngineConfig = {
       characters: [
         {
-          id: agentId,
-          sprite: playerSprite,
-          walkingAnimationMapping: 6,
+          id: this.playerPrefab.id,
+          sprite: this.playerPrefab,
+          walkingAnimationMapping: 0,
           startPosition: { x: 7, y: 6 },
         },
         {
           id: this.catPrefab.id,
-          sprite: this.catPrefab.texture,
+          sprite: this.catPrefab,
           walkingAnimationMapping: 0,
-          startPosition: { x: 10, y: 10 },
+          startPosition: { x: 4, y: 4 },
         },
       ],
     };
 
-    this.gridEngine.create(this.fieldMapTileMap, gridEngineConfig);
+    this.gridEngine.create(this.groundLayer.tilemap, gridEngineConfig);
   }
 
   update() {}
