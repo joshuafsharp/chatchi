@@ -16,6 +16,10 @@ export default class Main extends Phaser.Scene {
   private player!: Player;
   private catPrefab!: CatPrefab;
 
+  private gameState = {
+    paused: false,
+  };
+
   preload(): void {
     // TODO: Load village.json directly, not using an asset pack
     this.load.pack('village-asset-pack', 'src/game/assets/world/village-asset-pack.json');
@@ -41,6 +45,13 @@ export default class Main extends Phaser.Scene {
       this.groundLayer.scale = worldScale;
     }
 
+    // petLayer
+    const petLayer = this.add.layer();
+
+    // catPrefab
+    this.catPrefab = new CatPrefab(this, 176, 208);
+    petLayer.add(this.catPrefab);
+
     // playerLayer
     const playerLayer = this.add.layer();
 
@@ -48,13 +59,6 @@ export default class Main extends Phaser.Scene {
     const position = new Phaser.Math.Vector2(384, 224);
     this.player = new Player(this, this.gridEngine, position.x, position.y);
     playerLayer.add(this.player.sprite);
-
-    // petLayer
-    const petLayer = this.add.layer();
-
-    // catPrefab
-    this.catPrefab = new CatPrefab(this, 176, 208);
-    petLayer.add(this.catPrefab);
 
     this.events.emit('scene-awake');
 
@@ -84,7 +88,11 @@ export default class Main extends Phaser.Scene {
     this.cameras.main.setFollowOffset(-this.player.sprite.width, -this.player.sprite.height);
   }
 
-  update() {
+  public changePauseState(paused: boolean) {
+    this.gameState.paused = paused;
+  }
+
+  public update() {
     // TODO: things
   }
 }

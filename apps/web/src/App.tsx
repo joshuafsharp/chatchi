@@ -1,5 +1,10 @@
-import './game/PhaserGame';
+import * as React from 'react';
+
+import { PauseMenu } from './components/PauseMenu';
+import { phaser } from './game/PhaserGame';
 
 export default function App() {
-  return null;
+  console.log(phaser);
+
+  return <PauseMenu game={phaser} />;
 }
