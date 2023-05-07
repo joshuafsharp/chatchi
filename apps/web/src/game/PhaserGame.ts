@@ -3,7 +3,7 @@ import { GridEngine } from 'grid-engine';
 import MainScene from './scenes/Main';
 
 const config: Phaser.Types.Core.GameConfig = {
-  title: 'GPTRPG',
+  title: 'Chatchi',
   render: {
     antialias: false,
   },

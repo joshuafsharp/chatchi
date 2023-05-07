@@ -6,6 +6,8 @@ import { CatPrefab } from '../entities/pets/cat/CatPrefab';
 import { Player } from '../entities/player/Player';
 
 export default class Main extends Phaser.Scene {
+  public static key = 'main';
+
   public gridEngine!: GridEngine;
 
   // Tiles
@@ -19,6 +21,10 @@ export default class Main extends Phaser.Scene {
   private gameState = {
     paused: false,
   };
+
+  initialize() {
+    Reflect.apply(Phaser.Scene.call, this, Main.key);
+  }
 
   preload(): void {
     // TODO: Load village.json directly, not using an asset pack
