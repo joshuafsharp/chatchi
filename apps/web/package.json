@@ -11,6 +11,7 @@
     "check-types": "tsc --noEmit -p ./tsconfig.json"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.0.3",
     "class-variance-authority": "^0.6.0",
     "clsx": "1.2.1",
     "grid-engine": "2.27.1",
@@ -37,6 +38,7 @@
     "postcss": "8.4.23",
     "tailwindcss": "3.3.2",
     "typescript": "5.0.4",
-    "vite": "4.3.3"
+    "vite": "4.3.3",
+    "vite-tsconfig-paths": "4.2.0"
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 
-import Main from '../game/scenes/Main';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 
 interface Props {
   game: Phaser.Game;
@@ -10,27 +10,26 @@ interface Props {
 export function PauseMenu({ game }: Props) {
   const [paused, setPaused] = useState(false);
 
-  document.addEventListener('keyup', (event: KeyboardEvent) => {
-    const keyName = event.key;
-    if (keyName === 'Escape') {
-      console.log('pressed escape');
+  const changePauseState = () => {
+    setPaused(!paused);
 
-      setPaused(!paused);
-    }
-  });
-
-  const handleResume = () => {
-    setPaused(false);
-
-    // Only relevant if main gameplay scene is active
-    if (game.scene.isActive(Main.key)) {
-      const mainScene = game.scene.getScene(Main.key) as Main;
-      mainScene.changePauseState(false);
+    if (paused) {
+      game.resume();
+    } else {
+      game.pause();
     }
   };
 
+  document.addEventListener('keyup', (event: KeyboardEvent) => {
+    const keyName = event.key;
+    if (keyName === 'Escape') {
+      changePauseState();
+    }
+  });
+
   const handleQuit = () => {
     // TODO: Quit the game and return to main menu
+    console.log('TODO');
   };
 
   if (!paused) {
@@ -38,17 +37,31 @@ export function PauseMenu({ game }: Props) {
   }
 
   return (
-    <div className="fixed inset-0">
-      <ul className="flex w-full max-w-sm justify-center space-y-8 p-16">
-        <li>
-          <button onClick={handleResume}>Resume</button>
-        </li>
-        <li>
-          <button onClick={handleQuit}>Quit to Menu</button>
-        </li>
-      </ul>
+    <Dialog open={paused} onOpenChange={changePauseState}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle className="text-center text-lg font-semibold">Chatchi</DialogTitle>
+        </DialogHeader>
 
-      <div className="bg-black/40" />
-    </div>
+        <ul className="mx-auto mt-12 flex flex-col justify-center space-y-4 text-center">
+          <li>
+            <button
+              className="w-40 rounded-md bg-green-200 p-4 font-sans font-semibold hover:bg-green-300"
+              onClick={changePauseState}
+            >
+              Resume
+            </button>
+          </li>
+          <li>
+            <button
+              className="w-40 rounded-md bg-green-200 p-4 font-sans font-semibold hover:bg-green-300"
+              onClick={handleQuit}
+            >
+              Quit to Menu
+            </button>
+          </li>
+        </ul>
+      </DialogContent>
+    </Dialog>
   );
 }
