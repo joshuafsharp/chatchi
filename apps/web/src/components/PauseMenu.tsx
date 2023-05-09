@@ -10,40 +10,43 @@ interface Props {
 export function PauseMenu({ game }: Props) {
   const [paused, setPaused] = useState(false);
 
-  const changePauseState = () => {
-    setPaused(!paused);
-
+  const changePauseState = React.useCallback(() => {
     if (paused) {
       game.resume();
     } else {
       game.pause();
     }
-  };
 
-  document.addEventListener('keyup', (event: KeyboardEvent) => {
-    const keyName = event.key;
-    if (keyName === 'Escape') {
-      changePauseState();
-    }
-  });
+    setPaused(!paused);
+  }, [game, paused]);
+
+  React.useEffect(() => {
+    const onKeyUp = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        changePauseState();
+      }
+    };
+
+    window.addEventListener('keyup', onKeyUp);
+
+    return () => {
+      window.removeEventListener('keyup', onKeyUp);
+    };
+  }, [changePauseState]);
 
   const handleQuit = () => {
     // TODO: Quit the game and return to main menu
     console.log('TODO');
   };
 
-  if (!paused) {
-    return null;
-  }
-
   return (
-    <Dialog open={paused} onOpenChange={changePauseState}>
+    <Dialog open={paused}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="text-center text-lg font-semibold">Chatchi</DialogTitle>
         </DialogHeader>
 
-        <ul className="mx-auto mt-12 flex flex-col justify-center space-y-4 text-center">
+        <ul className="mx-auto mt-8 flex flex-col justify-center space-y-4 text-center">
           <li>
             <button
               className="w-40 rounded-md bg-green-200 p-4 font-sans font-semibold hover:bg-green-300"

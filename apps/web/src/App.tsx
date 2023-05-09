@@ -6,8 +6,6 @@ import { usePhaser } from './game/PhaserGame';
 export default function App() {
   const [phaser, setPhaser] = React.useState<Phaser.Game | null>(null);
 
-  const phaserParent = React.useRef<HTMLDivElement | null>(null);
-
   const canvasParentId = 'phaser-parent';
 
   React.useEffect(() => {
@@ -25,7 +23,7 @@ export default function App() {
   }
 
   return (
-    <div ref={phaserParent} id={canvasParentId}>
+    <div id={canvasParentId}>
       <PauseMenu game={phaser} />
     </div>
   );

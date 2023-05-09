@@ -12,5 +12,4 @@
       "outDir": "dist",
       "baseUrl": ".",
   },
-  "include": []
 }
