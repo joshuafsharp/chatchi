@@ -32,6 +32,12 @@ export default class Main extends Phaser.Scene {
     this.load.pack('grass-water-tiles', 'src/game/assets/world/grass-water-tiles.json');
     this.load.pack('cat-asset-pack', 'src/game/entities/pets/cat/cat-asset-pack.json');
 
+    this.load.spritesheet('pet-cat', 'src/game/entities/pets/cat/spritesheet.png', {
+      // TODO:
+      frameWidth: 26,
+      frameHeight: 36,
+    });
+
     this.load.spritesheet('player', 'src/game/entities/player/characters.png', {
       frameWidth: 26,
       frameHeight: 36,
@@ -55,8 +61,8 @@ export default class Main extends Phaser.Scene {
     const petLayer = this.add.layer();
 
     // catPrefab
-    this.catPrefab = new CatPrefab(this, 176, 208);
-    petLayer.add(this.catPrefab);
+    this.catPrefab = new CatPrefab(this, this.gridEngine, 176, 208);
+    petLayer.add(this.catPrefab.sprite);
 
     // playerLayer
     const playerLayer = this.add.layer();
@@ -73,8 +79,10 @@ export default class Main extends Phaser.Scene {
       characters: [
         {
           id: this.catPrefab.id,
-          sprite: this.catPrefab,
+          sprite: this.catPrefab.sprite,
           walkingAnimationMapping: 0,
+          speed: 3,
+          facingDirection: Direction.DOWN,
           startPosition: { x: 4, y: 4 },
         },
         {

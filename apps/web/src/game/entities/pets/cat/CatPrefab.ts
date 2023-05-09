@@ -1,35 +1,42 @@
+import { Direction, GridEngine } from 'grid-engine';
 import Phaser from 'phaser';
 
 import animations from './animations.json';
 import { idle } from './animations.state';
 
-export class CatPrefab extends Phaser.GameObjects.Sprite {
+export class CatPrefab {
   public id = 'pet-cat' as const;
+
+  private gridEngine: GridEngine;
+
+  public sprite: Phaser.GameObjects.Sprite;
+
+  private scene: Phaser.Scene;
 
   constructor(
     scene: Phaser.Scene,
+    gridEngine: GridEngine,
     x?: number,
     y?: number,
     texture?: string,
     frame?: number | string,
   ) {
-    super(scene, x ?? 16, y ?? 16, texture || 'pet-cat', frame ?? 0);
+    this.scene = scene;
+    this.gridEngine = gridEngine;
 
-    this.scale = 3;
-    this.setDepth(2);
+    this.sprite = this.scene.add.sprite(x || 0, y || 0, 'pet-cat');
+    this.sprite.scale = 3;
+    this.sprite.setDepth(2);
 
     this.scene.events.once(Phaser.Scenes.Events.UPDATE, this.start, this);
     this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.updatePet, this);
   }
 
-  private start() {
-    this.anims.create(animations as Phaser.Types.Animations.Animation);
-
-    this.anims.play(idle.down);
-  }
+  private start() {}
 
   private updatePet() {
     // TODO: Handle animation update when movement changes
+    this.gridEngine.move(this.id, Direction.RIGHT);
   }
 
   /* END-USER-CODE */
