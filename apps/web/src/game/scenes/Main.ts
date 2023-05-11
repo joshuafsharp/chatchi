@@ -30,15 +30,13 @@ export default class Main extends Phaser.Scene {
     // TODO: Load village.json directly, not using an asset pack
     this.load.pack('village-asset-pack', 'src/game/assets/world/village-asset-pack.json');
     this.load.pack('grass-water-tiles', 'src/game/assets/world/grass-water-tiles.json');
-    this.load.pack('cat-asset-pack', 'src/game/entities/pets/cat/cat-asset-pack.json');
 
-    this.load.spritesheet('pet-cat', 'src/game/entities/pets/cat/spritesheet.png', {
-      // TODO:
-      frameWidth: 26,
-      frameHeight: 36,
+    this.load.spritesheet(CatPrefab.id, 'src/game/entities/pets/cat/spritesheet.png', {
+      frameWidth: 17,
+      frameHeight: 17,
     });
 
-    this.load.spritesheet('player', 'src/game/entities/player/characters.png', {
+    this.load.spritesheet(Player.id, 'src/game/entities/player/characters.png', {
       frameWidth: 26,
       frameHeight: 36,
     });
@@ -78,15 +76,36 @@ export default class Main extends Phaser.Scene {
     const gridEngineConfig: GridEngineConfig = {
       characters: [
         {
-          id: this.catPrefab.id,
+          id: CatPrefab.id,
           sprite: this.catPrefab.sprite,
-          walkingAnimationMapping: 0,
           speed: 3,
           facingDirection: Direction.DOWN,
           startPosition: { x: 4, y: 4 },
+          walkingAnimationMapping: {
+            down: {
+              leftFoot: 0,
+              standing: 1,
+              rightFoot: 2,
+            },
+            up: {
+              leftFoot: 3,
+              standing: 4,
+              rightFoot: 5,
+            },
+            left: {
+              leftFoot: 6,
+              standing: 7,
+              rightFoot: 8,
+            },
+            right: {
+              leftFoot: 9,
+              standing: 10,
+              rightFoot: 11,
+            },
+          },
         },
         {
-          id: this.player.id,
+          id: Player.id,
           sprite: this.player.sprite,
           startPosition: { x: 7, y: 6 },
           facingDirection: Direction.DOWN,
