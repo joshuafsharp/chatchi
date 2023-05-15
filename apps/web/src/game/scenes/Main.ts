@@ -28,8 +28,11 @@ export default class Main extends Phaser.Scene {
 
   preload(): void {
     // TODO: Load village.json directly, not using an asset pack
-    this.load.pack('village-asset-pack', 'src/game/assets/world/village-asset-pack.json');
-    this.load.pack('grass-water-tiles', 'src/game/assets/world/grass-water-tiles.json');
+    this.load.tilemapTiledJSON('village', 'src/game/assets/world/village.json');
+    this.load.spritesheet('grass-water-tiles', 'src/game/assets/world/Grass tiles v.2.png', {
+      frameWidth: 16,
+      frameHeight: 16,
+    });
 
     this.load.spritesheet(CatPrefab.id, 'src/game/entities/pets/cat/spritesheet.png', {
       frameWidth: 17,
@@ -44,11 +47,11 @@ export default class Main extends Phaser.Scene {
 
   create(): void {
     // village
-    this.village = this.add.tilemap('village');
+    this.village = this.make.tilemap({ key: 'village' });
     this.village.addTilesetImage('grass-water', 'Grass tiles v.2');
 
     // groundLayer
-    const groundLayer = this.village.createLayer('Tile Layer 1', ['grass-water'], 0, 0);
+    const groundLayer = this.village.createLayer('GroundLevel1', ['grass-water'], 0, 0);
     if (groundLayer) {
       this.groundLayer = groundLayer;
       this.groundLayer.name = 'groundLayer';
@@ -72,7 +75,6 @@ export default class Main extends Phaser.Scene {
 
     this.events.emit('scene-awake');
 
-    // TODO: Fix layering of player/pet in world, player on top
     const gridEngineConfig: GridEngineConfig = {
       characters: [
         {
