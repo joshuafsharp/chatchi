@@ -1,7 +1,7 @@
 import { Direction, GridEngine } from 'grid-engine';
 import Phaser from 'phaser';
 
-import { worldScale } from '~/game/common/config';
+import { dimensions } from '~/game/common/config';
 
 export class CatPrefab {
   public static id = 'pet-cat' as const;
@@ -17,7 +17,7 @@ export class CatPrefab {
     this.gridEngine = gridEngine;
 
     this.sprite = this.scene.add.sprite(startPosX, startPosY, CatPrefab.id);
-    this.sprite.scale = worldScale;
+    this.sprite.scale = dimensions.scale;
     this.sprite.setDepth(2);
 
     this.scene.events.once(Phaser.Scenes.Events.UPDATE, this.start, this);

@@ -1,7 +1,7 @@
 import { Direction, GridEngine } from 'grid-engine';
 import Phaser from 'phaser';
 
-import { worldScale } from '~/game/common/config';
+import { dimensions } from '~/game/common/config';
 
 export class Player {
   public static id = 'player' as const;
@@ -16,7 +16,7 @@ export class Player {
     this.scene = scene;
 
     this.sprite = this.scene.add.sprite(startPosX, startPosY, Player.id);
-    this.sprite.scale = worldScale;
+    this.sprite.scale = dimensions.scale;
     this.sprite.setDepth(7);
 
     this.gridEngine = gridEngine;

@@ -1,7 +1,7 @@
 import { Direction, GridEngine, GridEngineConfig } from 'grid-engine';
 import Phaser from 'phaser';
 
-import { worldScale } from '../common/config';
+import { dimensions, tilesets, worldLayers } from '../common/config';
 import { CatPrefab } from '../entities/pets/cat/CatPrefab';
 import { Player } from '../entities/player/Player';
 
@@ -12,7 +12,6 @@ export default class Main extends Phaser.Scene {
 
   // Tiles
   private village!: Phaser.Tilemaps.Tilemap;
-  private groundLayer!: Phaser.Tilemaps.TilemapLayer;
 
   // Characters
   private player!: Player;
@@ -27,12 +26,14 @@ export default class Main extends Phaser.Scene {
   }
 
   preload(): void {
-    // TODO: Load village.json directly, not using an asset pack
     this.load.tilemapTiledJSON('village', 'src/game/assets/world/village.json');
-    this.load.spritesheet('grass-water-tiles', 'src/game/assets/world/Grass tiles v.2.png', {
-      frameWidth: 16,
-      frameHeight: 16,
-    });
+
+    for (const tileset of tilesets) {
+      this.load.spritesheet(tileset, `src/game/assets/world/tilesets/${tileset}.png`, {
+        frameWidth: dimensions.frameWidth,
+        frameHeight: dimensions.frameHeight,
+      });
+    }
 
     this.load.spritesheet(CatPrefab.id, 'src/game/entities/pets/cat/spritesheet.png', {
       frameWidth: 17,
@@ -50,12 +51,12 @@ export default class Main extends Phaser.Scene {
     this.village = this.make.tilemap({ key: 'village' });
     this.village.addTilesetImage('grass-water', 'Grass tiles v.2');
 
-    // groundLayer
-    const groundLayer = this.village.createLayer('GroundLevel1', ['grass-water'], 0, 0);
-    if (groundLayer) {
-      this.groundLayer = groundLayer;
-      this.groundLayer.name = 'groundLayer';
-      this.groundLayer.scale = worldScale;
+    for (const layer of worldLayers) {
+      const villageLayer = this.village.createLayer(layer, tilesets, 0, 0);
+      if (villageLayer) {
+        villageLayer.name = layer;
+        villageLayer.scale = dimensions.scale;
+      }
     }
 
     // petLayer
@@ -117,7 +118,7 @@ export default class Main extends Phaser.Scene {
       ],
     };
 
-    this.gridEngine.create(this.groundLayer.tilemap, gridEngineConfig);
+    this.gridEngine.create(this.village, gridEngineConfig);
 
     this.cameras.main.startFollow(this.player.sprite, true);
     this.cameras.main.setFollowOffset(-this.player.sprite.width, -this.player.sprite.height);
