@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { PauseMenu } from './components/PauseMenu';
+import { NeedsMeter } from './components/needs/NeedsMeter';
 import { usePhaser } from './game/PhaserGame';
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
   return (
     <div id={canvasParentId}>
       <PauseMenu game={phaser} />
+      <NeedsMeter game={phaser} />
     </div>
   );
 }

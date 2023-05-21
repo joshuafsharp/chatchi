@@ -9,13 +9,6 @@ export class Agent {
 
   private agent_id: string;
 
-  private sleepiness: number;
-
-  private bedPosition: {
-    x: number;
-    y: number;
-  };
-
   private socket: WebSocket;
 
   constructor(

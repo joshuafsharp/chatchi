@@ -12,8 +12,8 @@ export const worldLayers = [
   'Dirt',
   'GroundLevel2',
   'Buildings',
-  //   'Objects',
-  //   'Objects2',
+  // 'Objects',
+  // 'Objects2',
   'Trees',
   'Trees2',
   'Trees3',
@@ -31,3 +31,5 @@ export const tilesets = [
   'tall-grass',
   'trees',
 ];
+
+export const bedPosition = new Phaser.Math.Vector2(8, 7);

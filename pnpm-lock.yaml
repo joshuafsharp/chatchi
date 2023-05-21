@@ -63,6 +63,7 @@ importers:
       tailwind-merge: 1.12.0
       tailwindcss: 3.3.2
       tailwindcss-animate: ^1.0.5
+      tailwindcss-image-rendering: 1.0.2
       typescript: 5.0.4
       vite: 4.3.3
       vite-tsconfig-paths: 4.2.0
@@ -94,6 +95,7 @@ importers:
       phasereditor2d-launcher: 3.60.3
       postcss: 8.4.23
       tailwindcss: 3.3.2
+      tailwindcss-image-rendering: 1.0.2
       typescript: 5.0.4
       vite: 4.3.3
       vite-tsconfig-paths: 4.2.0_3z2trfxmfq3caiicz7xj33yke4
@@ -2224,6 +2226,13 @@ packages:
       rimraf: 3.0.2
     dev: true
 
+  /flat/4.1.1:
+    resolution: {integrity: sha512-FmTtBsHskrU6FJ2VxCnsDb84wu9zhmO3cUX2kGFb5tuwhfXxGciiT0oRY+cck35QmG+NmGh5eLz6lLCpWTqwpA==}
+    hasBin: true
+    dependencies:
+      is-buffer: 2.0.5
+    dev: true
+
   /flatted/3.2.7:
     resolution: {integrity: sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==}
     dev: true
@@ -2553,6 +2562,11 @@ packages:
       has-tostringtag: 1.0.0
     dev: true
 
+  /is-buffer/2.0.5:
+    resolution: {integrity: sha512-i2R6zNFDwgEHJyQUtJEk0XFi1i0dPFn/oqjK3/vPCcDeJvW5NQ83V8QbicfF1SupOaB0h8ntgBC2YiE7dfyctQ==}
+    engines: {node: '>=4'}
+    dev: true
+
   /is-callable/1.2.7:
     resolution: {integrity: sha512-1BC0BVFhS/p0qtw6enp8e+8OD0UrK0oFLztSjNzhcKA3WDuJxxAPXzPuPtKkjEY9UUoEWlX/8fgKeu2S8i9JTA==}
     engines: {node: '>= 0.4'}
@@ -2792,7 +2806,6 @@ packages:
 
   /lodash/4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: false
 
   /loose-envify/1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
@@ -3660,6 +3673,13 @@ packages:
     dependencies:
       tailwindcss: 3.3.2
     dev: false
+
+  /tailwindcss-image-rendering/1.0.2:
+    resolution: {integrity: sha512-WC3hJd2RbHBYIqtJxwpQ5z94wUNyBrJn1eFz3J/jR7OGrQB8WYbJGvJQ9scNNVzoHEYGoNdZbUI90l9YgpBCwg==}
+    dependencies:
+      flat: 4.1.1
+      lodash: 4.17.21
+    dev: true
 
   /tailwindcss/3.3.2:
     resolution: {integrity: sha512-9jPkMiIBXvPc2KywkraqsUfbfj+dHDb+JPWtSJa9MLFdrPyazI7q6WX2sUrm7R9eVR7qqv3Pas7EvQFzxKnI6w==}

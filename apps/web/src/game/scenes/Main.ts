@@ -49,7 +49,10 @@ export default class Main extends Phaser.Scene {
   create(): void {
     // village
     this.village = this.make.tilemap({ key: 'village' });
-    this.village.addTilesetImage('grass-water', 'Grass tiles v.2');
+    // this.village.addTilesetImage('grass-water', 'Grass tiles v.2');
+    for (const tileset of tilesets) {
+      this.village.addTilesetImage(tileset);
+    }
 
     for (const layer of worldLayers) {
       const villageLayer = this.village.createLayer(layer, tilesets, 0, 0);
@@ -61,6 +64,8 @@ export default class Main extends Phaser.Scene {
 
     // petLayer
     const petLayer = this.add.layer();
+    petLayer.setName('Pet');
+    petLayer.setDepth(10);
 
     // catPrefab
     this.catPrefab = new CatPrefab(this, this.gridEngine, 176, 208);
@@ -68,11 +73,14 @@ export default class Main extends Phaser.Scene {
 
     // playerLayer
     const playerLayer = this.add.layer();
+    playerLayer.setName('Player');
+    playerLayer.setDepth(11);
 
     // player
     const position = new Phaser.Math.Vector2(384, 224);
     this.player = new Player(this, this.gridEngine, position.x, position.y);
     playerLayer.add(this.player.sprite);
+    // this.add.layer(this.player.sprite);
 
     this.events.emit('scene-awake');
 
@@ -128,7 +136,7 @@ export default class Main extends Phaser.Scene {
     this.gameState.paused = paused;
   }
 
-  public update() {
+  public update(time, deltaTime) {
     // TODO: things
   }
 }
