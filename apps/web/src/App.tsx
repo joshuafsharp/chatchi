@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import './App.styles.css';
 import { PauseMenu } from './components/PauseMenu';
 import { NeedsMeter } from './components/needs/NeedsMeter';
 import { usePhaser } from './game/PhaserGame';

@@ -1,4 +1,5 @@
 import { GridEngine } from 'grid-engine';
+import { StoreApi, UseBoundStore, create } from 'zustand';
 
 import { CharacterId, bedPosition } from '~/game/common/config';
 
@@ -8,14 +9,25 @@ const energyDrainDuration = 5 * 60 * 1000;
 // Time in ms to fully recover energy while asleep
 const recoveryDuration = 2 * 60 * 1000;
 
+export interface EnergyState {
+  value: number;
+  increase: (by: number) => void;
+  decrease: (by: number) => void;
+}
+
+export const useEnergyStore = create<EnergyState>()((set) => ({
+  value: 100,
+  increase: (by: number) => set((state) => ({ value: state.value + by })),
+  decrease: (by: number) => set((state) => ({ value: state.value + by })),
+}));
+
 export class SleepBehaviour {
   private scene: Phaser.Scene;
   private gridEngine: GridEngine;
 
   private characterId: CharacterId;
 
-  // Energy remaining as a percentage (0-100)
-  private energy: number;
+  private energy: UseBoundStore<StoreApi<EnergyState>>;
 
   public sleeping: boolean;
 
@@ -25,7 +37,8 @@ export class SleepBehaviour {
 
     this.characterId = characterId;
 
-    this.energy = 100;
+    this.energy = useEnergyStore;
+
     this.sleeping = false;
   }
 
@@ -34,7 +47,8 @@ export class SleepBehaviour {
   }
 
   public update(time: number, deltaTime: number) {
-    if (this.sleeping && this.energy >= 100) {
+    const energyState = this.energy.getState();
+    if (this.sleeping && energyState.value >= 100) {
       this.wakeUp();
 
       return;
@@ -46,16 +60,20 @@ export class SleepBehaviour {
       return;
     }
 
-    if (this.energy < 10 && !this.gridEngine.isMoving(this.characterId)) {
+    if (energyState.value < 10 && !this.gridEngine.isMoving(this.characterId)) {
       this.navigateToBed();
     }
 
     const characterPos = this.gridEngine.getPosition(this.characterId);
-    if (characterPos.x === bedPosition.x && characterPos.y === bedPosition.y && this.energy < 10) {
+    if (
+      characterPos.x === bedPosition.x &&
+      characterPos.y === bedPosition.y &&
+      energyState.value < 10
+    ) {
       this.sleeping = true;
     }
 
-    this.energy -= (deltaTime / energyDrainDuration) * 100;
+    energyState.decrease(-(deltaTime / energyDrainDuration) * 100);
   }
 
   public wakeUp() {
@@ -73,6 +91,6 @@ export class SleepBehaviour {
   private updateSleep(deltaTime: number) {
     // TODO: say zzzz
 
-    this.energy += (deltaTime / recoveryDuration) * 100;
+    this.energy.getState().increase((deltaTime / recoveryDuration) * 100);
   }
 }

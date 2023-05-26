@@ -53,7 +53,6 @@ importers:
       clsx: 1.2.1
       eslint-config-react: 1.1.7
       grid-engine: 2.27.1
-      jotai: 2.0.4
       lucide-react: ^0.214.0
       phaser: 3.60.0
       phasereditor2d-launcher: 3.60.3
@@ -63,18 +62,17 @@ importers:
       tailwind-merge: 1.12.0
       tailwindcss: 3.3.2
       tailwindcss-animate: ^1.0.5
-      tailwindcss-image-rendering: 1.0.2
       typescript: 5.0.4
       vite: 4.3.3
       vite-tsconfig-paths: 4.2.0
       web-vitals: 2.1.4
       ws: 8.13.0
+      zustand: 4.3.8
     dependencies:
       '@radix-ui/react-dialog': 1.0.3_jzmwd7o3v3kmff4ylna2b7a73a
       class-variance-authority: 0.6.0_typescript@5.0.4
       clsx: 1.2.1
       grid-engine: 2.27.1_phaser@3.60.0
-      jotai: 2.0.4_react@18.1.0
       lucide-react: 0.214.0_react@18.1.0
       phaser: 3.60.0
       react: 18.1.0
@@ -83,6 +81,7 @@ importers:
       tailwindcss-animate: 1.0.5_tailwindcss@3.3.2
       web-vitals: 2.1.4
       ws: 8.13.0
+      zustand: 4.3.8_react@18.1.0
     devDependencies:
       '@chatchi/eslint-config': link:../../packages/eslint-config
       '@chatchi/prettier-config': link:../../packages/prettier-config
@@ -95,7 +94,6 @@ importers:
       phasereditor2d-launcher: 3.60.3
       postcss: 8.4.23
       tailwindcss: 3.3.2
-      tailwindcss-image-rendering: 1.0.2
       typescript: 5.0.4
       vite: 4.3.3
       vite-tsconfig-paths: 4.2.0_3z2trfxmfq3caiicz7xj33yke4
@@ -2226,13 +2224,6 @@ packages:
       rimraf: 3.0.2
     dev: true
 
-  /flat/4.1.1:
-    resolution: {integrity: sha512-FmTtBsHskrU6FJ2VxCnsDb84wu9zhmO3cUX2kGFb5tuwhfXxGciiT0oRY+cck35QmG+NmGh5eLz6lLCpWTqwpA==}
-    hasBin: true
-    dependencies:
-      is-buffer: 2.0.5
-    dev: true
-
   /flatted/3.2.7:
     resolution: {integrity: sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==}
     dev: true
@@ -2562,11 +2553,6 @@ packages:
       has-tostringtag: 1.0.0
     dev: true
 
-  /is-buffer/2.0.5:
-    resolution: {integrity: sha512-i2R6zNFDwgEHJyQUtJEk0XFi1i0dPFn/oqjK3/vPCcDeJvW5NQ83V8QbicfF1SupOaB0h8ntgBC2YiE7dfyctQ==}
-    engines: {node: '>=4'}
-    dev: true
-
   /is-callable/1.2.7:
     resolution: {integrity: sha512-1BC0BVFhS/p0qtw6enp8e+8OD0UrK0oFLztSjNzhcKA3WDuJxxAPXzPuPtKkjEY9UUoEWlX/8fgKeu2S8i9JTA==}
     engines: {node: '>= 0.4'}
@@ -2708,18 +2694,6 @@ packages:
     resolution: {integrity: sha512-QAdOptna2NYiSSpv0O/BwoHBSmz4YhpzJHyi+fnMRTXFjp7B8i/YG5Z8IfusxB1ufjcD2Sre1F3R+nX3fvy7gg==}
     hasBin: true
 
-  /jotai/2.0.4_react@18.1.0:
-    resolution: {integrity: sha512-XkR1Jtm4a2iKV/7fdB3rNHjJz8FkkDMVczqiAok7lt8W4F69l/ZQkPGWSEV+hJOJXRn27k6XYKOoKEQIwBuAMA==}
-    engines: {node: '>=12.20.0'}
-    peerDependencies:
-      react: '>=17.0.0'
-    peerDependenciesMeta:
-      react:
-        optional: true
-    dependencies:
-      react: 18.1.0
-    dev: false
-
   /js-sdsl/4.4.0:
     resolution: {integrity: sha512-FfVSdx6pJ41Oa+CF7RDaFmTnCaFhua+SNYQX74riGOpl96x+2jQCqEfQ2bnXu/5DPCqlRuiqyvTJM0Qjz26IVg==}
     dev: true
@@ -2806,6 +2780,7 @@ packages:
 
   /lodash/4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+    dev: false
 
   /loose-envify/1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
@@ -3674,13 +3649,6 @@ packages:
       tailwindcss: 3.3.2
     dev: false
 
-  /tailwindcss-image-rendering/1.0.2:
-    resolution: {integrity: sha512-WC3hJd2RbHBYIqtJxwpQ5z94wUNyBrJn1eFz3J/jR7OGrQB8WYbJGvJQ9scNNVzoHEYGoNdZbUI90l9YgpBCwg==}
-    dependencies:
-      flat: 4.1.1
-      lodash: 4.17.21
-    dev: true
-
   /tailwindcss/3.3.2:
     resolution: {integrity: sha512-9jPkMiIBXvPc2KywkraqsUfbfj+dHDb+JPWtSJa9MLFdrPyazI7q6WX2sUrm7R9eVR7qqv3Pas7EvQFzxKnI6w==}
     engines: {node: '>=14.0.0'}
@@ -3982,6 +3950,14 @@ packages:
       tslib: 2.5.0
     dev: false
 
+  /use-sync-external-store/1.2.0_react@18.1.0:
+    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.1.0
+    dev: false
+
   /util-deprecate/1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
@@ -4123,3 +4099,19 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /zustand/4.3.8_react@18.1.0:
+    resolution: {integrity: sha512-4h28KCkHg5ii/wcFFJ5Fp+k1J3gJoasaIbppdgZFO4BPJnsNxL0mQXBSFgOgAdCdBj35aDTPvdAJReTMntFPGg==}
+    engines: {node: '>=12.7.0'}
+    peerDependencies:
+      immer: '>=9.0'
+      react: '>=16.8'
+    peerDependenciesMeta:
+      immer:
+        optional: true
+      react:
+        optional: true
+    dependencies:
+      react: 18.1.0
+      use-sync-external-store: 1.2.0_react@18.1.0
+    dev: false

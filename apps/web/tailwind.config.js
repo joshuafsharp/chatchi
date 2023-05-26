@@ -46,15 +46,19 @@ export const theme = {
         DEFAULT: 'hsl(var(--card))',
         foreground: 'hsl(var(--card-foreground))',
       },
+      gray: {
+        800: '#363738',
+      },
     },
     borderRadius: {
       lg: `var(--radius)`,
       md: `calc(var(--radius) - 2px)`,
       sm: 'calc(var(--radius) - 4px)',
     },
-    fontFamily: {
-      sans: ['var(--font-sans)', ...fontFamily.sans],
-    },
+    // fontFamily: {
+    //   sans: ['var(--font-sans)', ...fontFamily.sans],
+    //   mono: ['VT323', ...fontFamily.mono],
+    // },
     keyframes: {
       'accordion-down': {
         from: { height: 0 },
@@ -70,8 +74,8 @@ export const theme = {
       'accordion-up': 'accordion-up 0.2s ease-out',
     },
   },
+  fontFamily: {
+    sans: ['VT323', ...fontFamily.mono],
+  },
 };
-export const variants = {
-  imageRendering: ['responsive'],
-};
-export const plugins = [require('tailwindcss-animate'), require('tailwindcss-image-rendering')];
+export const plugins = [require('tailwindcss-animate')];
