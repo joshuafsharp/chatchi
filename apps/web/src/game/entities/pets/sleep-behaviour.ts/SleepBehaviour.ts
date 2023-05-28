@@ -1,7 +1,9 @@
 import { GridEngine } from 'grid-engine';
-import { StoreApi, UseBoundStore, create } from 'zustand';
+import { StoreApi, UseBoundStore } from 'zustand';
 
 import { CharacterId, bedPosition } from '~/game/common/config';
+
+import { EnergyState, useEnergyStore } from './state';
 
 // Time in ms to fully drain energy while awake
 const energyDrainDuration = 5 * 60 * 1000;
@@ -9,25 +11,13 @@ const energyDrainDuration = 5 * 60 * 1000;
 // Time in ms to fully recover energy while asleep
 const recoveryDuration = 2 * 60 * 1000;
 
-export interface EnergyState {
-  value: number;
-  increase: (by: number) => void;
-  decrease: (by: number) => void;
-}
-
-export const useEnergyStore = create<EnergyState>()((set) => ({
-  value: 100,
-  increase: (by: number) => set((state) => ({ value: state.value + by })),
-  decrease: (by: number) => set((state) => ({ value: state.value + by })),
-}));
-
 export class SleepBehaviour {
   private scene: Phaser.Scene;
   private gridEngine: GridEngine;
 
   private characterId: CharacterId;
 
-  private energy: UseBoundStore<StoreApi<EnergyState>>;
+  private energyStore: UseBoundStore<StoreApi<EnergyState>>;
 
   public sleeping: boolean;
 
@@ -37,7 +27,7 @@ export class SleepBehaviour {
 
     this.characterId = characterId;
 
-    this.energy = useEnergyStore;
+    this.energyStore = useEnergyStore;
 
     this.sleeping = false;
   }
@@ -47,7 +37,7 @@ export class SleepBehaviour {
   }
 
   public update(time: number, deltaTime: number) {
-    const energyState = this.energy.getState();
+    const energyState = this.energyStore.getState();
     if (this.sleeping && energyState.value >= 100) {
       this.wakeUp();
 
@@ -91,6 +81,6 @@ export class SleepBehaviour {
   private updateSleep(deltaTime: number) {
     // TODO: say zzzz
 
-    this.energy.getState().increase((deltaTime / recoveryDuration) * 100);
+    this.energyStore.getState().increase((deltaTime / recoveryDuration) * 100);
   }
 }

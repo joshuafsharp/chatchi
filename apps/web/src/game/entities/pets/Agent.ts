@@ -2,39 +2,35 @@ import { Direction, GridEngine } from 'grid-engine';
 
 import { Surroundings, ValidDirection } from '@chatchi/types';
 
+interface State {}
+
 export class Agent {
   private gridEngine: GridEngine;
 
-  private fieldMapTileMap: Phaser.Tilemaps.Tilemap;
+  private tileMap: Phaser.Tilemaps.Tilemap;
 
-  private agent_id: string;
+  private agentId: string;
 
   private socket: WebSocket;
 
-  constructor(
-    gridEngine: GridEngine,
-    fieldMapTileMap: Phaser.Tilemaps.Tilemap,
-    agent_id: string,
-    bedPosition = { x: 3, y: 3 },
-  ) {
+  constructor(gridEngine: GridEngine, tileMap: Phaser.Tilemaps.Tilemap, agentId: string) {
     this.gridEngine = gridEngine;
-    this.fieldMapTileMap = fieldMapTileMap;
-    this.agent_id = agent_id;
-    this.sleepiness = 0;
-    this.bedPosition = bedPosition;
+    this.tileMap = tileMap;
+    this.agentId = agentId;
 
     const socket = new WebSocket('ws://localhost:8080');
     this.socket = socket;
 
     this.socket.addEventListener('open', () => {
-      this.socket.send(JSON.stringify({ type: 'create_agent', agent_id }));
+      this.socket.send(JSON.stringify({ type: 'createAgent', agentId }));
     });
 
     this.initializeServerListener();
+
     this.initializeMovementStoppedListener();
   }
 
-  initializeServerListener() {
+  private initializeServerListener() {
     // Listen to events from the server
     this.socket.addEventListener('message', (event) => {
       const res = JSON.parse(event.data);
@@ -45,7 +41,7 @@ export class Agent {
       }
 
       // Whether the agent was created or not, we want to start the next move
-      if (res.type === 'agent_created') {
+      if (res.type === 'agentCreated') {
         console.log(res.message);
         this.nextMove();
         return;
@@ -56,12 +52,12 @@ export class Agent {
 
         switch (data.action.type) {
           case 'move': {
-            this.moveAndCheckCollision(data.action.direction, this.fieldMapTileMap);
+            this.moveAndCheckCollision(data.action.direction, this.tileMap);
 
             break;
           }
           case 'navigate': {
-            this.gridEngine.moveTo(this.agent_id, { x: data.action.x, y: data.action.y });
+            this.gridEngine.moveTo(this.agentId, { x: data.action.x, y: data.action.y });
 
             break;
           }
@@ -71,7 +67,7 @@ export class Agent {
             if (x === this.bedPosition.x && y === this.bedPosition.y) {
               this.sleepiness = 0;
             } else {
-              console.log(`Character ${this.agent_id} tried to sleep out of bed.`);
+              console.log(`Character ${this.agentId} tried to sleep out of bed.`);
             }
 
             this.nextMove();
@@ -89,14 +85,19 @@ export class Agent {
     });
   }
 
-  initializeMovementStoppedListener() {
+  private initializeMovementStoppedListener() {
     this.gridEngine.movementStopped().subscribe(() => {
       this.nextMove();
     });
   }
 
+  public update(state: State) {
+    // TODO:
+    this.socket.send();
+  }
+
   getCharacterPosition() {
-    return this.gridEngine.getPosition(this.agent_id);
+    return this.gridEngine.getPosition(this.agentId);
   }
 
   getSurroundings() {
@@ -121,7 +122,7 @@ export class Agent {
       { key: Direction.RIGHT, dx: 1, dy: 0 },
     ];
 
-    this.fieldMapTileMap.layers.forEach((layer) => {
+    this.tileMap.layers.forEach((layer) => {
       const tilemapLayer = layer.tilemapLayer;
 
       directions.forEach((direction) => {
@@ -136,8 +137,8 @@ export class Agent {
     return surroundings;
   }
 
-  moveAndCheckCollision(direction: ValidDirection, fieldMapTileMap: Phaser.Tilemaps.Tilemap) {
-    const currentPosition = this.gridEngine.getPosition(this.agent_id);
+  moveAndCheckCollision(direction: ValidDirection, tileMap: Phaser.Tilemaps.Tilemap) {
+    const currentPosition = this.gridEngine.getPosition(this.agentId);
     const nextPosition = { ...currentPosition };
 
     switch (direction) {
@@ -162,7 +163,7 @@ export class Agent {
     }
 
     // Check if the next position has a tile with the 'ge_collide' property set to true
-    const collision = fieldMapTileMap.layers.some((layer) => {
+    const collision = tileMap.layers.some((layer) => {
       const tile = layer.tilemapLayer.getTileAt(nextPosition.x, nextPosition.y);
       return tile && tile.properties.ge_collide;
     });
@@ -171,24 +172,18 @@ export class Agent {
       this.nextMove();
     } else {
       // TODO: Address this issue of requiring enum values instead of string literals
-      this.gridEngine.move(this.agent_id, direction);
+      this.gridEngine.move(this.agentId, direction);
     }
-  }
-
-  increaseSleepiness() {
-    this.sleepiness = Math.min(this.sleepiness + 1, 10);
   }
 
   nextMove() {
     const characterPosition = this.getCharacterPosition();
-    // const bedP
     const surroundings = this.getSurroundings();
-    this.increaseSleepiness();
 
     this.socket.send(
       JSON.stringify({
         type: 'requestNextMove',
-        agent_id: this.agent_id,
+        agentId: this.agentId,
         position: characterPosition,
         surroundings: surroundings,
         sleepiness: this.sleepiness,

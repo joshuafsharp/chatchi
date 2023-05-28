@@ -1,60 +1,82 @@
-import { WebSocketServer } from 'ws';
+import { WebSocket, WebSocketServer } from 'ws';
 
 import ServerAgent from './ServerAgent';
 
-const wss = new WebSocketServer({ port: 8080 });
+const webSocketServer = new WebSocketServer({ port: 8080 });
 
 const agents: {
   [id: string]: ServerAgent;
 } = {};
 
-wss.on('connection', function connection(ws) {
+webSocketServer.on('connection', (socket) => {
   console.log('Connected to web socket server');
 
-  ws.on('error', console.error);
+  socket.on('error', console.error);
 
-  ws.on('message', async function message(data) {
-    const parsedData = JSON.parse(data.toString());
+  socket.on('message', async function message(stream) {
+    const message = JSON.parse(stream.toString());
 
-    if (parsedData.type === 'create_agent') {
-      console.log(`Creating Agent: ${parsedData.agent_id}`);
-
-      const newAgentId = parsedData.agent_id;
-
-      if (agents[newAgentId]) {
-        ws.send(
-          JSON.stringify({
-            type: 'agent_created',
-            success: false,
-            message: `Agent with id ${newAgentId} already exists`,
-          }),
-        );
-
-        return;
+    switch (message.type) {
+      case 'createAgent': {
+        onCreateAgent(socket, message);
+        break;
       }
 
-      agents[newAgentId] = new ServerAgent(newAgentId);
+      case 'requestNextMove': {
+        onRequestNextMove(socket, message);
+        break;
+      }
 
-      ws.send(
-        JSON.stringify({
-          type: 'agent_created',
-          success: true,
-          agent_id: newAgentId,
-          message: `Agent with id ${newAgentId} created`,
-        }),
-      );
-    } else if (parsedData.type === 'requestNextMove') {
-      const agentId = parsedData.agent_id;
-
-      console.log(`requestNextMove message for agent: ${agentId}`);
-
-      if (agents[agentId]) {
-        const completion = await agents[agentId].processMessage(parsedData);
-
-        ws.send(JSON.stringify({ type: 'nextMove', agent_id: agentId, data: completion }));
-      } else {
-        ws.send(JSON.stringify({ type: 'error', message: `Agent with id ${agentId} not found` }));
+      default: {
+        console.error(`Error: Unable to process message with data: ${stream}`);
       }
     }
   });
 });
+
+async function onCreateAgent(socket: WebSocket, data: any) {
+  console.log(`Creating Agent: ${data.agent_id}`);
+
+  const newAgentId = data.agentId;
+
+  if (agents[newAgentId]) {
+    socket.send(
+      JSON.stringify({
+        type: 'agentCreated',
+        success: false,
+        message: `Agent with id ${newAgentId} already exists`,
+      }),
+    );
+
+    return;
+  }
+
+  agents[newAgentId] = new ServerAgent(newAgentId);
+
+  socket.send(
+    JSON.stringify({
+      type: 'agent_created',
+      success: true,
+      agent_id: newAgentId,
+      message: `Agent with id ${newAgentId} created`,
+    }),
+  );
+}
+
+async function onRequestNextMove(socket: WebSocket, data: any) {
+  const agentId = data.agentId;
+
+  console.log(`requestNextMove message for agent: ${agentId}`);
+
+  if (agents[agentId]) {
+    const completion = await agents[agentId].processMessage(data);
+
+    socket.send(JSON.stringify({ type: 'nextMove', agentId: agentId, data: completion }));
+  } else {
+    socket.send(JSON.stringify({ type: 'error', message: `Agent with id ${agentId} not found` }));
+  }
+}
+
+async function onRequestMessage(socket: WebSocket, data: any) {
+  // TODO
+}

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import MeterEmpty from '~/assets/ui/meter/empty.png';
 import MeterFull from '~/assets/ui/meter/full.png';
-import { useEnergyStore } from '~/game/entities/pets/SleepBehaviour';
+import { useEnergyStore } from '~/game/entities/pets/sleep-behaviour.ts/SleepBehaviour';
 
 interface Props {
   game: Phaser.Game;

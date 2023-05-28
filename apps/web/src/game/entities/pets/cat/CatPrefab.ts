@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 
 import { dimensions } from '~/game/common/config';
 
-import { SleepBehaviour } from '../SleepBehaviour';
+import { SleepBehaviour } from '../sleep-behaviour.ts/SleepBehaviour';
 
 export class CatPrefab {
   public static id = 'pet-cat' as const;
