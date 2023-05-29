@@ -19,8 +19,6 @@ export class SleepBehaviour {
 
   private energyStore: UseBoundStore<StoreApi<EnergyState>>;
 
-  public sleeping: boolean;
-
   constructor(scene: Phaser.Scene, gridEngine: GridEngine, characterId: CharacterId) {
     this.scene = scene;
     this.gridEngine = gridEngine;
@@ -28,8 +26,6 @@ export class SleepBehaviour {
     this.characterId = characterId;
 
     this.energyStore = useEnergyStore;
-
-    this.sleeping = false;
   }
 
   public start() {
@@ -38,13 +34,13 @@ export class SleepBehaviour {
 
   public update(time: number, deltaTime: number) {
     const energyState = this.energyStore.getState();
-    if (this.sleeping && energyState.value >= 100) {
+    if (energyState.isSleeping && energyState.value >= 100) {
       this.wakeUp();
 
       return;
     }
 
-    if (this.sleeping) {
+    if (energyState.isSleeping) {
       this.updateSleep(deltaTime);
 
       return;
@@ -60,14 +56,14 @@ export class SleepBehaviour {
       characterPos.y === bedPosition.y &&
       energyState.value < 10
     ) {
-      this.sleeping = true;
+      energyState.isSleeping = true;
     }
 
     energyState.decrease(-(deltaTime / energyDrainDuration) * 100);
   }
 
   public wakeUp() {
-    this.sleeping = false;
+    this.energyStore.getState().toggleSleeping(false);
   }
 
   public stopNavigating() {

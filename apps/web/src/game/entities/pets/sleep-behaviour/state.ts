@@ -5,6 +5,7 @@ export interface EnergyState {
   value: number;
   increase: (by: number) => void;
   decrease: (by: number) => void;
+  toggleSleeping: (sleeping: boolean) => void;
 }
 
 export const useEnergyStore = create<EnergyState>()((set) => ({
@@ -12,4 +13,5 @@ export const useEnergyStore = create<EnergyState>()((set) => ({
   value: 100,
   increase: (by: number) => set((state) => ({ value: state.value + by })),
   decrease: (by: number) => set((state) => ({ value: state.value + by })),
+  toggleSleeping: (sleeping: boolean) => set(() => ({ isSleeping: sleeping })),
 }));

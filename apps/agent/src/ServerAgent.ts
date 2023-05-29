@@ -1,4 +1,5 @@
 import extract from 'extract-json-from-string';
+import { Position } from 'grid-engine';
 import { Configuration, OpenAIApi } from 'openai';
 
 import { Surroundings, ValidDirection } from '@chatchi/types';
@@ -12,14 +13,26 @@ interface ParsedData {
     y: number;
   };
   surroundings: Surroundings;
-  sleepiness: number;
+  energy: number;
 }
 
-interface ActionResponse {
-  action: {
-    type: 'move' | 'wait';
-    direction?: ValidDirection;
-  };
+export type ActionResponse = MessageReponse &
+  (
+    | {
+        action: {
+          type: 'navigate';
+          position: Position;
+        };
+      }
+    | {
+        action: {
+          type: 'wait';
+        };
+      }
+  );
+
+export interface MessageReponse {
+  speak: string;
 }
 
 const configuration = new Configuration({
@@ -39,16 +52,15 @@ class ServerAgent {
     try {
       const prompt = `# Introduction
 
-      You are acting as an agent living in a simulated 2 dimensional universe. Your goal is to exist as best as you see fit and meet your needs.
+      You are acting as an agent living in a simulated 2 dimensional universe as a virtual pet cat. Your goal is to exist as best as you see fit and meet your needs. You can communicate with your owner in English, but must respond in the style of a cheeky cat. Be talkative with your owner about what you're doing and thinking about.
       
       # Capabilities
       
       You have a limited set of capabilities. They are listed below:
       
-      * Move (up, down, left, right)
-      * Wait
-      * Navigate (to an x,y coordinate)
-      * Sleep
+      * wait
+      * navigate (to an x,y coordinate)
+      * speak
 
       # Responses
       
@@ -56,9 +68,13 @@ class ServerAgent {
       
       {
         action: {
-          type: "move",
-          direction: "up" | "down" | "left" | "right"
-        }
+          type: "navigate",
+          position: {
+            x: 10,
+            y: 12
+          }
+        },
+        speak: "I'm walking to my favourite spot."
       }
       
       # Perceptions
@@ -70,11 +86,8 @@ class ServerAgent {
       Position: 
       ${JSON.stringify(parsedData.position)}
 
-      Surroundings:
-      ${JSON.stringify(parsedData.surroundings)}
-
-      Sleepiness:
-      ${parsedData.sleepiness} out of 10
+      Energy:
+      ${parsedData.energy}%
 
       The JSON response indicating the next move is.
       `;
@@ -92,7 +105,7 @@ class ServerAgent {
     }
 
     if (attempt > 0) {
-      prompt = 'YOU MUST ONLY RESPOND WITH VALID JSON OBJECTSN' + prompt;
+      prompt = 'YOU MUST ONLY RESPOND WITH VALID JSON OBJECTS' + prompt;
     }
 
     const response = await openai.createChatCompletion({

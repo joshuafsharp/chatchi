@@ -25,6 +25,7 @@
     "@chatchi/types": "*",
     "@types/node": "18.16.0",
     "@types/ws": "8.5.4",
+    "grid-engine": "2.27.1",
     "nodemon": "^2.0.22",
     "ts-node": "10.9.1",
     "typescript": "5.0.4"

@@ -15,6 +15,7 @@
     "class-variance-authority": "^0.6.0",
     "clsx": "1.2.1",
     "grid-engine": "2.27.1",
+    "lodash-es": "4.17.21",
     "lucide-react": "^0.214.0",
     "phaser": "3.60.0",
     "react": "18.1.0",
@@ -26,9 +27,11 @@
     "zustand": "4.3.8"
   },
   "devDependencies": {
+    "@chatchi/agent": "*",
     "@chatchi/eslint-config": "*",
     "@chatchi/prettier-config": "*",
     "@chatchi/types": "*",
+    "@types/lodash-es": "4.17.7",
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.1",
     "@vitejs/plugin-react": "4.0.0",

@@ -22,8 +22,13 @@ webSocketServer.on('connection', (socket) => {
         break;
       }
 
-      case 'requestNextMove': {
-        onRequestNextMove(socket, message);
+      case 'requestActivity': {
+        onRequestActivity(socket, message);
+        break;
+      }
+
+      case 'requestMessage': {
+        onRequestMessage(socket, message);
         break;
       }
 
@@ -35,7 +40,7 @@ webSocketServer.on('connection', (socket) => {
 });
 
 async function onCreateAgent(socket: WebSocket, data: any) {
-  console.log(`Creating Agent: ${data.agent_id}`);
+  console.log(`Creating Agent: ${data.agentId}`);
 
   const newAgentId = data.agentId;
 
@@ -55,23 +60,25 @@ async function onCreateAgent(socket: WebSocket, data: any) {
 
   socket.send(
     JSON.stringify({
-      type: 'agent_created',
+      type: 'agentCreated',
       success: true,
-      agent_id: newAgentId,
+      agentId: newAgentId,
       message: `Agent with id ${newAgentId} created`,
     }),
   );
+
+  console.log(`Agent with id: ${data.agentId} created.`);
 }
 
-async function onRequestNextMove(socket: WebSocket, data: any) {
+async function onRequestActivity(socket: WebSocket, data: any) {
   const agentId = data.agentId;
 
-  console.log(`requestNextMove message for agent: ${agentId}`);
+  console.log(`requestActivity message for agent: ${agentId}`);
 
   if (agents[agentId]) {
     const completion = await agents[agentId].processMessage(data);
 
-    socket.send(JSON.stringify({ type: 'nextMove', agentId: agentId, data: completion }));
+    socket.send(JSON.stringify({ type: 'nextActivity', agentId: agentId, data: completion }));
   } else {
     socket.send(JSON.stringify({ type: 'error', message: `Agent with id ${agentId} not found` }));
   }
