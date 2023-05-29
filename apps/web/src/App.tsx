@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import './App.styles.css';
 import { PauseMenu } from './components/PauseMenu';
+import { ChatContainer } from './components/chat/ChatContainer';
 import { NeedsMeter } from './components/needs/NeedsMeter';
 import { usePhaser } from './game/PhaserGame';
 
@@ -28,6 +29,7 @@ export default function App() {
     <div id={canvasParentId}>
       <PauseMenu game={phaser} />
       <NeedsMeter game={phaser} />
+      <ChatContainer />
     </div>
   );
 }
