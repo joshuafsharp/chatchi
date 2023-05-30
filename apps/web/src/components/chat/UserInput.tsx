@@ -27,7 +27,6 @@ export function UserInput({ game }: Props) {
   };
 
   return (
-    // <div className=" pb-1 pl-4 pr-2 pt-3" style={{ background: `url(${DialogueBox})` }}>
     <div className="flex space-x-2">
       <div
         className="h-10 flex-grow"
