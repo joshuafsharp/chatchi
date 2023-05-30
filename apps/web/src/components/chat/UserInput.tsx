@@ -3,9 +3,14 @@ import * as React from 'react';
 import DialogueBox from '~/assets/ui/chat/dialogue-input.png';
 import SubmitImagePressed from '~/assets/ui/chat/submit-pressed.png';
 import SubmitImage from '~/assets/ui/chat/submit.png';
+import MainScene from '~/game/scenes/old.main.scene';
 import { cn } from '~/lib/utils';
 
-export function UserInput() {
+interface Props {
+  game: Phaser.Game;
+}
+
+export function UserInput({ game }: Props) {
   const [isMouseDown, setIsMouseDown] = React.useState(false);
 
   const handleMouseDown = () => {
@@ -16,9 +21,14 @@ export function UserInput() {
     setIsMouseDown(false);
   };
 
+  const handleFocus = () => {
+    // TODO: Disable movement cursors
+    console.log((game.scene.scenes[0] as MainScene).gridEngine);
+  };
+
   return (
     // <div className=" pb-1 pl-4 pr-2 pt-3" style={{ background: `url(${DialogueBox})` }}>
-    <form className="flex space-x-2">
+    <div className="flex space-x-2">
       <div
         className="h-10 flex-grow"
         style={{
@@ -45,9 +55,10 @@ export function UserInput() {
         }}
         aria-label="Submit message"
         className={cn('w-9 bg-bottom focus:outline-none', isMouseDown ? 'h-[39px]' : 'h-10')}
+        onFocus={handleFocus}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
       />
-    </form>
+    </div>
   );
 }

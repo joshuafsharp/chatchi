@@ -19,7 +19,7 @@ export default function App() {
     const phaserGame = usePhaser(canvasParentId);
 
     setPhaser(phaserGame);
-  }, []);
+  }, [phaser]);
 
   if (!phaser) {
     return null;
@@ -29,7 +29,7 @@ export default function App() {
     <div id={canvasParentId}>
       <PauseMenu game={phaser} />
       <NeedsMeter game={phaser} />
-      <ChatContainer />
+      <ChatContainer game={phaser} />
     </div>
   );
 }
