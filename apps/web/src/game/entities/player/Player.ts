@@ -12,6 +12,8 @@ export class Player {
 
   private scene: Phaser.Scene;
 
+  private moveCursors: Phaser.Types.Input.Keyboard.CursorKeys | undefined;
+
   constructor(scene: Phaser.Scene, gridEngine: GridEngine, startPosX: number, startPosY: number) {
     this.scene = scene;
 
@@ -20,6 +22,8 @@ export class Player {
     this.sprite.setDepth(7);
 
     this.gridEngine = gridEngine;
+
+    this.moveCursors = this.scene?.input.keyboard?.createCursorKeys();
 
     this.scene.events.once(Phaser.Scenes.Events.UPDATE, this.start, this);
     this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.updatePlayer, this);
@@ -40,20 +44,19 @@ export class Player {
   }
 
   private handleMovement() {
-    const cursors = this.scene?.input.keyboard?.createCursorKeys();
-    if (!cursors) {
+    if (!this.moveCursors) {
       console.log('Unable to access scene keyboard input');
 
       return;
     }
 
-    if (cursors.left.isDown) {
+    if (this.moveCursors.left.isDown) {
       this.gridEngine.move(Player.id, Direction.LEFT);
-    } else if (cursors.right.isDown) {
+    } else if (this.moveCursors.right.isDown) {
       this.gridEngine.move(Player.id, Direction.RIGHT);
-    } else if (cursors.up.isDown) {
+    } else if (this.moveCursors.up.isDown) {
       this.gridEngine.move(Player.id, Direction.UP);
-    } else if (cursors.down.isDown) {
+    } else if (this.moveCursors.down.isDown) {
       this.gridEngine.move(Player.id, Direction.DOWN);
     }
   }
