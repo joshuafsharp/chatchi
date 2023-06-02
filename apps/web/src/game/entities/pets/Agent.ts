@@ -3,6 +3,8 @@ import { DebouncedFunc, throttle } from 'lodash-es';
 
 import { ActionResponse, MessageReponse } from '@chatchi/agent/src/ServerAgent';
 
+import { useConversationStore } from '~/game/state/conversation';
+
 export interface AgentState {
   availableForActivity: boolean;
   energy: number;
@@ -22,7 +24,6 @@ export class Agent {
   public handleUpdate: DebouncedFunc<(state: AgentState) => void>;
 
   public activityQueue: ActionResponse[];
-  public speechMessage?: MessageReponse;
 
   constructor(gridEngine: GridEngine, agentId: string) {
     this.gridEngine = gridEngine;
@@ -74,6 +75,10 @@ export class Agent {
         case 'nextActivity': {
           this.awaitingResponse = false;
           this.activityQueue.push(res.data);
+
+          if ('speak' in res.data) {
+            useConversationStore.getState().addMessage('pet-cat', res.data.speak);
+          }
           return;
         }
 
@@ -91,7 +96,6 @@ export class Agent {
   // }
 
   private update(state: AgentState) {
-    console.log('thing', this.awaitingResponse, this.activityQueue);
     if (!this.agentCreated || this.awaitingResponse) {
       return;
     }

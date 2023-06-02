@@ -4,7 +4,7 @@ import DialogueBox from '~/assets/ui/chat/dialogue-input.png';
 import SubmitImagePressed from '~/assets/ui/chat/submit-pressed.png';
 import SubmitImage from '~/assets/ui/chat/submit.png';
 import MainScene from '~/game/scenes/old.main.scene';
-import { conversation } from '~/game/services/conversation';
+import { useConversationStore } from '~/game/state/conversation';
 import { cn } from '~/lib/utils';
 
 interface Props {
@@ -12,6 +12,8 @@ interface Props {
 }
 
 export function UserInput({ game }: Props) {
+  const conversation = useConversationStore();
+
   const inputRef = React.createRef<HTMLInputElement>();
 
   const [isMouseDown, setIsMouseDown] = React.useState(false);
@@ -55,6 +57,8 @@ export function UserInput({ game }: Props) {
     }
 
     conversation.addMessage('player', message);
+
+    inputRef.current.value = '';
   };
 
   return (
@@ -81,7 +85,6 @@ export function UserInput({ game }: Props) {
       </div>
 
       <button
-        type="button"
         style={{
           backgroundImage: isMouseDown ? `url(${SubmitImagePressed})` : `url(${SubmitImage})`,
           backgroundRepeat: 'no-repeat',
