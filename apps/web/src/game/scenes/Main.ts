@@ -49,7 +49,6 @@ export default class Main extends Phaser.Scene {
   create(): void {
     // village
     this.village = this.make.tilemap({ key: 'village' });
-    // this.village.addTilesetImage('grass-water', 'Grass tiles v.2');
     for (const tileset of tilesets) {
       this.village.addTilesetImage(tileset);
     }
@@ -62,13 +61,24 @@ export default class Main extends Phaser.Scene {
       }
     }
 
+    const objects1 = this.village.createFromObjects('Objects', {});
+    const objects2 = this.village.createFromObjects('Objects2', {});
+    for (const object of [...objects1, ...objects2]) {
+      if (object instanceof Phaser.GameObjects.Sprite) {
+        object.setPosition(object.x * dimensions.scale, object.y * dimensions.scale);
+        object.setScale(dimensions.scale);
+        object.setDepth(4);
+      }
+    }
+
     // petLayer
     const petLayer = this.add.layer();
     petLayer.setName('Pet');
     petLayer.setDepth(10);
 
     // catPrefab
-    this.catPrefab = new CatPrefab(this, this.gridEngine, 176, 208);
+    const catPosition = new Phaser.Math.Vector2(3, 4);
+    this.catPrefab = new CatPrefab(this, this.gridEngine, catPosition.x, catPosition.y);
     petLayer.add(this.catPrefab.sprite);
 
     // playerLayer
@@ -77,10 +87,9 @@ export default class Main extends Phaser.Scene {
     playerLayer.setDepth(11);
 
     // player
-    const position = new Phaser.Math.Vector2(384, 224);
-    this.player = new Player(this, this.gridEngine, position.x, position.y);
+    const playerPosition = new Phaser.Math.Vector2(7, 6);
+    this.player = new Player(this, this.gridEngine, playerPosition.x, playerPosition.y);
     playerLayer.add(this.player.sprite);
-    // this.add.layer(this.player.sprite);
 
     this.events.emit('scene-awake');
 
@@ -91,7 +100,7 @@ export default class Main extends Phaser.Scene {
           sprite: this.catPrefab.sprite,
           speed: 3,
           facingDirection: Direction.DOWN,
-          startPosition: { x: 4, y: 4 },
+          startPosition: catPosition,
           walkingAnimationMapping: {
             down: {
               leftFoot: 0,
@@ -118,7 +127,7 @@ export default class Main extends Phaser.Scene {
         {
           id: Player.id,
           sprite: this.player.sprite,
-          startPosition: { x: 7, y: 6 },
+          startPosition: playerPosition,
           facingDirection: Direction.DOWN,
           speed: 3,
           walkingAnimationMapping: 1,

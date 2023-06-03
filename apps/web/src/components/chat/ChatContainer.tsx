@@ -19,6 +19,7 @@ export function ChatContainer({ game }: Props) {
       <ul className="mb-4 max-h-40 space-y-2 overflow-y-auto">
         {conversation.messages.map((message) => (
           <li
+            key={message.timestamp}
             className={cn('w-3/4 border-[0.5rem]  text-brown-700', {
               'ml-auto': message.sender === 'pet-cat',
             })}

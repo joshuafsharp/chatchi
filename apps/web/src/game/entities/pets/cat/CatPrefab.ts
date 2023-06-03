@@ -49,10 +49,6 @@ export class CatPrefab {
 
     this.processAgentActivities();
 
-    if (this.agent.speechMessage) {
-      // TODO: Say thing
-    }
-
     this.sleepBehaviour.update(time, deltaTime);
   }
 
