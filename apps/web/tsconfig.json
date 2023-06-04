@@ -25,7 +25,8 @@
     "paths": {
       "~/*": ["./src/*"],
       "@game/*": ["./src/game/*"]
-    }
+    },
+    "types": ["vite/client"]
   },
   "include": [
     "src",

@@ -6,7 +6,7 @@ import { CharacterId, bedPosition } from '~/game/common/config';
 import { EnergyState, useEnergyStore } from './state';
 
 // Time in ms to fully drain energy while awake
-const energyDrainDuration = 5 * 60;
+const energyDrainDuration = 5 * 60 * 1000;
 
 // Time in ms to fully recover energy while asleep
 const recoveryDuration = 2 * 60 * 1000;

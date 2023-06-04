@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.3",
+    "@supabase/auth-ui-react": "0.4.2",
+    "@supabase/supabase-js": "2.24.0",
     "class-variance-authority": "^0.6.0",
     "clsx": "1.2.1",
     "grid-engine": "2.27.1",

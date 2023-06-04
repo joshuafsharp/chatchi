@@ -1,4 +1,6 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
+
+import { Session, createClient } from '@supabase/supabase-js';
 
 import './App.styles.css';
 import { PauseMenu } from './components/PauseMenu';
@@ -6,24 +8,38 @@ import { ChatContainer } from './components/chat/ChatContainer';
 import { NeedsMeter } from './components/needs/NeedsMeter';
 import { usePhaser } from './game/PhaserGame';
 
-export default function App() {
-  const [phaser, setPhaser] = React.useState<Phaser.Game | null>(null);
+const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_KEY);
 
+export default function App() {
   const canvasParentId = 'phaser-parent';
 
-  React.useEffect(() => {
-    if (phaser) {
-      return;
-    }
+  const phaser = usePhaser(canvasParentId);
 
-    const phaserGame = usePhaser(canvasParentId);
+  const [session, setSession] = useState<Session | null>(null);
 
-    setPhaser(phaserGame);
-  }, [phaser]);
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   if (!phaser) {
     return null;
   }
+
+  // if (!session) {
+  //   return <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />;
+  // } else {
+  //   return <div>Logged in!</div>;
+  // }
 
   return (
     <div id={canvasParentId}>
