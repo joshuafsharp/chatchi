@@ -5,6 +5,7 @@ import { Session, createClient } from '@supabase/supabase-js';
 import './App.styles.css';
 import { PauseMenu } from './components/PauseMenu';
 import { ChatContainer } from './components/chat/ChatContainer';
+import { Menu } from './components/header/menu';
 import { NeedsMeter } from './components/needs/NeedsMeter';
 import { usePhaser } from './game/PhaserGame';
 
@@ -35,15 +36,10 @@ export default function App() {
     return null;
   }
 
-  // if (!session) {
-  //   return <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />;
-  // } else {
-  //   return <div>Logged in!</div>;
-  // }
-
   return (
     <div id={canvasParentId}>
       <PauseMenu game={phaser} />
+      <Menu session={session} />
       <NeedsMeter game={phaser} />
       <ChatContainer game={phaser} />
     </div>

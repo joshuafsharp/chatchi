@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import DialogueBox from '~/assets/ui/chat/dialogue-input.png';
-import SubmitImagePressed from '~/assets/ui/chat/submit-pressed.png';
-import SubmitImage from '~/assets/ui/chat/submit.png';
+import SubmitIconPressed from '~/assets/ui/icons/submit-pressed.png';
+import SubmitIcon from '~/assets/ui/icons/submit.png';
 import MainScene from '~/game/scenes/old.main.scene';
 import { useConversationStore } from '~/game/state/conversation';
 import { cn } from '~/lib/utils';
@@ -86,14 +86,15 @@ export function UserInput({ game }: Props) {
 
       <button
         style={{
-          backgroundImage: isMouseDown ? `url(${SubmitImagePressed})` : `url(${SubmitImage})`,
+          backgroundImage: isMouseDown ? `url(${SubmitIconPressed})` : `url(${SubmitIcon})`,
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
         }}
         aria-label="Submit message"
-        className={cn('w-9 bg-bottom focus:outline-none', isMouseDown ? 'h-[39px]' : 'h-10')}
+        className={cn('w-9 bg-bottom focus:outline-none')}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
       />
     </form>
   );
