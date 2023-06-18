@@ -3,13 +3,16 @@ import { useEffect, useState } from 'react';
 import { Session, createClient } from '@supabase/supabase-js';
 
 import './App.styles.css';
-import { PauseMenu } from './components/PauseMenu';
+import { PauseDialog } from './components/PauseDialog';
 import { ChatContainer } from './components/chat/ChatContainer';
 import { Menu } from './components/header/menu';
 import { NeedsMeter } from './components/needs/NeedsMeter';
 import { usePhaser } from './game/PhaserGame';
 
-const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_KEY);
+export const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_KEY,
+);
 
 export default function App() {
   const canvasParentId = 'phaser-parent';
@@ -38,7 +41,7 @@ export default function App() {
 
   return (
     <div id={canvasParentId}>
-      <PauseMenu game={phaser} />
+      <PauseDialog game={phaser} />
       <Menu session={session} />
       <NeedsMeter game={phaser} />
       <ChatContainer game={phaser} />

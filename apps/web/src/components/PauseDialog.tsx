@@ -7,7 +7,7 @@ interface Props {
   game: Phaser.Game;
 }
 
-export function PauseMenu({ game }: Props) {
+export function PauseDialog({ game }: Props) {
   const [paused, setPaused] = useState(false);
 
   const changePauseState = React.useCallback(() => {
