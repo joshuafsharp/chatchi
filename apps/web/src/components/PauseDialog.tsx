@@ -40,7 +40,7 @@ export function PauseDialog({ game }: Props) {
   };
 
   return (
-    <Dialog open={paused}>
+    <Dialog open={paused} onOpenChange={setPaused}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="text-center text-lg font-semibold">Chatchi</DialogTitle>

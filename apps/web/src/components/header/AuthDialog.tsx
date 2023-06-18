@@ -13,7 +13,7 @@ interface Props {
 
 export function AuthDialog({ open, setOpen }: Props) {
   return (
-    <Dialog open={open}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
           <div className="text-xl">Log in or Register</div>
