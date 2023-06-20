@@ -4,7 +4,7 @@ import MainScene from './scenes/Main';
 
 let phaserClient: Phaser.Game | undefined;
 
-export const usePhaser = (parentId: string) => {
+export const usePhaser = (parentId?: string) => {
   if (phaserClient) {
     return phaserClient;
   }

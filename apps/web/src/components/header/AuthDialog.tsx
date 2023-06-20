@@ -2,8 +2,8 @@ import * as React from 'react';
 
 import { Auth } from '@supabase/auth-ui-react';
 
-import { supabase } from '~/App';
-
+import { AuthContext, supabase } from '../AuthProvider';
+import { PauseDialog } from '../PauseDialog';
 import { Dialog, DialogContent, DialogHeader } from '../ui/dialog';
 
 interface Props {
@@ -12,19 +12,25 @@ interface Props {
 }
 
 export function AuthDialog({ open, setOpen }: Props) {
+  const auth = React.useContext(AuthContext);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
-        <DialogHeader>
-          <div className="text-xl">Log in or Register</div>
+        <DialogHeader className="text-xl">
+          {auth?.user ? `Welcome ${auth.user.email}!` : `Log in or Register`}
         </DialogHeader>
 
-        <Auth
-          supabaseClient={supabase}
-          // appearance={{ theme: ThemeSupa }}
-          magicLink
-          providers={[]}
-        />
+        {auth?.user ? (
+          <></>
+        ) : (
+          <Auth
+            supabaseClient={supabase}
+            // appearance={{ theme: ThemeSupa }}
+            magicLink
+            providers={[]}
+          />
+        )}
       </DialogContent>
     </Dialog>
   );

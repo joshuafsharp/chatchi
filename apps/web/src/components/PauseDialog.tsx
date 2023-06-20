@@ -1,24 +1,29 @@
 import React from 'react';
 import { useState } from 'react';
 
+import { usePhaser } from '~/game/PhaserGame';
+
+import { AuthContext, supabase } from './AuthProvider';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 
 interface Props {
-  game: Phaser.Game;
+  open: boolean;
+  setOpen: (open: boolean) => void;
 }
 
-export function PauseDialog({ game }: Props) {
-  const [paused, setPaused] = useState(false);
+export function PauseDialog({ open, setOpen }: Props) {
+  const game = usePhaser();
+  const auth = React.useContext(AuthContext);
 
   const changePauseState = React.useCallback(() => {
-    if (paused) {
+    if (open) {
       game.resume();
     } else {
       game.pause();
     }
 
-    setPaused(!paused);
-  }, [game, paused]);
+    setOpen(!open);
+  }, [game, open, setOpen]);
 
   React.useEffect(() => {
     const onKeyUp = (event: KeyboardEvent) => {
@@ -40,10 +45,12 @@ export function PauseDialog({ game }: Props) {
   };
 
   return (
-    <Dialog open={paused}>
+    <Dialog open={open}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-center text-lg font-semibold">Chatchi</DialogTitle>
+          <DialogTitle className="text-center text-2xl font-semibold tracking-wide">
+            Chatchi
+          </DialogTitle>
         </DialogHeader>
 
         <ul className="mx-auto mt-8 flex flex-col justify-center space-y-4 text-center">
@@ -56,13 +63,23 @@ export function PauseDialog({ game }: Props) {
             </button>
           </li>
           <li>
+            {auth?.user ? (
+
+              <button onClick={supabase}>Sign out</button>
+            ) : (
+              // TODO: show supabase Auth UI
+              <button onClick={}>Log in or Register</button>
+            )
+          }
+            </li>
+          {/* <li>
             <button
               className="w-40 rounded-md bg-green-200 p-4 font-sans font-semibold hover:bg-green-300"
               onClick={handleQuit}
             >
               Quit to Menu
             </button>
-          </li>
+          </li> */}
         </ul>
       </DialogContent>
     </Dialog>

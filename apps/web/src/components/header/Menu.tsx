@@ -1,19 +1,11 @@
 import * as React from 'react';
 
-import { Auth } from '@supabase/auth-ui-react';
-import { Session } from '@supabase/supabase-js';
-
-import { supabase } from '~/App';
 import AccountPawPressedIcon from '~/assets/ui/icons/account-paw-pressed.png';
 import AccountPawIcon from '~/assets/ui/icons/account-paw.png';
 
-import { AuthDialog } from './AuthDialog';
+import { PauseDialog } from '../PauseDialog';
 
-interface Props {
-  session: Session;
-}
-
-export function Menu({ session }: Props) {
+export function Menu() {
   const [mouseDownButton, setMouseDownButton] = React.useState<string | null>(null);
   const [authDialogOpen, setAuthDialogOpen] = React.useState(false);
 
@@ -45,7 +37,7 @@ export function Menu({ session }: Props) {
         </button>
       </div>
 
-      <AuthDialog open={authDialogOpen} setOpen={setAuthDialogOpen} />
+      <PauseDialog open={authDialogOpen} setOpen={setAuthDialogOpen} />
     </>
   );
 }
